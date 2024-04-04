@@ -8,17 +8,34 @@
 
 /* Begin PBXBuildFile section */
 		705F9D5B2BBED48B004B1EA0 /* TheMovieDatabase_TCAApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 705F9D5A2BBED48B004B1EA0 /* TheMovieDatabase_TCAApp.swift */; };
-		705F9D5D2BBED48B004B1EA0 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 705F9D5C2BBED48B004B1EA0 /* ContentView.swift */; };
+		705F9D5D2BBED48B004B1EA0 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 705F9D5C2BBED48B004B1EA0 /* RootView.swift */; };
 		705F9D5F2BBED48C004B1EA0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 705F9D5E2BBED48C004B1EA0 /* Assets.xcassets */; };
 		705F9D622BBED48C004B1EA0 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 705F9D612BBED48C004B1EA0 /* Preview Assets.xcassets */; };
+		705F9D6A2BBED8B9004B1EA0 /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = 705F9D692BBED8B9004B1EA0 /* ComposableArchitecture */; };
+		705F9D702BBEE0B9004B1EA0 /* NetworkUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 705F9D6F2BBEE0B9004B1EA0 /* NetworkUtility.swift */; };
+		705F9D732BBEE1D5004B1EA0 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 705F9D722BBEE1D5004B1EA0 /* HomeView.swift */; };
+		705F9D752BBEE1E6004B1EA0 /* HomeViewReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 705F9D742BBEE1E6004B1EA0 /* HomeViewReducer.swift */; };
+		705F9D772BBEE289004B1EA0 /* Movie.swift in Sources */ = {isa = PBXBuildFile; fileRef = 705F9D762BBEE289004B1EA0 /* Movie.swift */; };
+		705F9D792BBEE322004B1EA0 /* APIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 705F9D782BBEE322004B1EA0 /* APIClient.swift */; };
+		705F9D7B2BBEE36D004B1EA0 /* MovieCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 705F9D7A2BBEE36D004B1EA0 /* MovieCell.swift */; };
+		705F9D7D2BBEF81D004B1EA0 /* Section.swift in Sources */ = {isa = PBXBuildFile; fileRef = 705F9D7C2BBEF81D004B1EA0 /* Section.swift */; };
+		705F9D7F2BBEF83E004B1EA0 /* SectionData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 705F9D7E2BBEF83E004B1EA0 /* SectionData.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		705F9D572BBED48B004B1EA0 /* TheMovieDatabase_TCA.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TheMovieDatabase_TCA.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		705F9D5A2BBED48B004B1EA0 /* TheMovieDatabase_TCAApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TheMovieDatabase_TCAApp.swift; sourceTree = "<group>"; };
-		705F9D5C2BBED48B004B1EA0 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		705F9D5C2BBED48B004B1EA0 /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
 		705F9D5E2BBED48C004B1EA0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		705F9D612BBED48C004B1EA0 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		705F9D6F2BBEE0B9004B1EA0 /* NetworkUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkUtility.swift; sourceTree = "<group>"; };
+		705F9D722BBEE1D5004B1EA0 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		705F9D742BBEE1E6004B1EA0 /* HomeViewReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewReducer.swift; sourceTree = "<group>"; };
+		705F9D762BBEE289004B1EA0 /* Movie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Movie.swift; sourceTree = "<group>"; };
+		705F9D782BBEE322004B1EA0 /* APIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIClient.swift; sourceTree = "<group>"; };
+		705F9D7A2BBEE36D004B1EA0 /* MovieCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieCell.swift; sourceTree = "<group>"; };
+		705F9D7C2BBEF81D004B1EA0 /* Section.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Section.swift; sourceTree = "<group>"; };
+		705F9D7E2BBEF83E004B1EA0 /* SectionData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionData.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -26,6 +43,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				705F9D6A2BBED8B9004B1EA0 /* ComposableArchitecture in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -51,8 +69,12 @@
 		705F9D592BBED48B004B1EA0 /* TheMovieDatabase_TCA */ = {
 			isa = PBXGroup;
 			children = (
+				705F9D6E2BBEE0A3004B1EA0 /* Network */,
+				705F9D6D2BBEE09A004B1EA0 /* Modals */,
+				705F9D6B2BBEE084004B1EA0 /* Views */,
+				705F9D6C2BBEE08A004B1EA0 /* Screens */,
 				705F9D5A2BBED48B004B1EA0 /* TheMovieDatabase_TCAApp.swift */,
-				705F9D5C2BBED48B004B1EA0 /* ContentView.swift */,
+				705F9D5C2BBED48B004B1EA0 /* RootView.swift */,
 				705F9D5E2BBED48C004B1EA0 /* Assets.xcassets */,
 				705F9D602BBED48C004B1EA0 /* Preview Content */,
 			);
@@ -65,6 +87,50 @@
 				705F9D612BBED48C004B1EA0 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		705F9D6B2BBEE084004B1EA0 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				705F9D7A2BBEE36D004B1EA0 /* MovieCell.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		705F9D6C2BBEE08A004B1EA0 /* Screens */ = {
+			isa = PBXGroup;
+			children = (
+				705F9D712BBEE0E6004B1EA0 /* Home */,
+			);
+			path = Screens;
+			sourceTree = "<group>";
+		};
+		705F9D6D2BBEE09A004B1EA0 /* Modals */ = {
+			isa = PBXGroup;
+			children = (
+				705F9D762BBEE289004B1EA0 /* Movie.swift */,
+				705F9D7C2BBEF81D004B1EA0 /* Section.swift */,
+				705F9D7E2BBEF83E004B1EA0 /* SectionData.swift */,
+			);
+			path = Modals;
+			sourceTree = "<group>";
+		};
+		705F9D6E2BBEE0A3004B1EA0 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				705F9D6F2BBEE0B9004B1EA0 /* NetworkUtility.swift */,
+				705F9D782BBEE322004B1EA0 /* APIClient.swift */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
+		705F9D712BBEE0E6004B1EA0 /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				705F9D722BBEE1D5004B1EA0 /* HomeView.swift */,
+				705F9D742BBEE1E6004B1EA0 /* HomeViewReducer.swift */,
+			);
+			path = Home;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -83,6 +149,9 @@
 			dependencies = (
 			);
 			name = TheMovieDatabase_TCA;
+			packageProductDependencies = (
+				705F9D692BBED8B9004B1EA0 /* ComposableArchitecture */,
+			);
 			productName = TheMovieDatabase_TCA;
 			productReference = 705F9D572BBED48B004B1EA0 /* TheMovieDatabase_TCA.app */;
 			productType = "com.apple.product-type.application";
@@ -111,6 +180,9 @@
 				Base,
 			);
 			mainGroup = 705F9D4E2BBED48B004B1EA0;
+			packageReferences = (
+				705F9D682BBED8B9004B1EA0 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */,
+			);
 			productRefGroup = 705F9D582BBED48B004B1EA0 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -137,7 +209,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				705F9D5D2BBED48B004B1EA0 /* ContentView.swift in Sources */,
+				705F9D7D2BBEF81D004B1EA0 /* Section.swift in Sources */,
+				705F9D752BBEE1E6004B1EA0 /* HomeViewReducer.swift in Sources */,
+				705F9D792BBEE322004B1EA0 /* APIClient.swift in Sources */,
+				705F9D7B2BBEE36D004B1EA0 /* MovieCell.swift in Sources */,
+				705F9D5D2BBED48B004B1EA0 /* RootView.swift in Sources */,
+				705F9D772BBEE289004B1EA0 /* Movie.swift in Sources */,
+				705F9D732BBEE1D5004B1EA0 /* HomeView.swift in Sources */,
+				705F9D7F2BBEF83E004B1EA0 /* SectionData.swift in Sources */,
+				705F9D702BBEE0B9004B1EA0 /* NetworkUtility.swift in Sources */,
 				705F9D5B2BBED48B004B1EA0 /* TheMovieDatabase_TCAApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -344,6 +424,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		705F9D682BBED8B9004B1EA0 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/pointfreeco/swift-composable-architecture";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.9.2;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		705F9D692BBED8B9004B1EA0 /* ComposableArchitecture */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 705F9D682BBED8B9004B1EA0 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;
+			productName = ComposableArchitecture;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 705F9D4F2BBED48B004B1EA0 /* Project object */;
 }
