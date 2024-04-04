@@ -13,13 +13,19 @@ struct HomeViewReducer {
     @ObservableState
     struct State: Equatable {
         var sections : [SectionData] = []
+        var searchQuery = ""
+        var searchedResults: [Movie] = []
     }
     
     enum Action {
         case fetchData
         case dataFetched([Section:[Movie]])
+        case searchQueryChanged(String)
+        case searchQueryChangeDebounced
+        case searchResultFetched([Movie])
     }
     
+    private enum CancelID { case search }
     @Dependency(\.apiClient) var apiClient
     
     var body: some ReducerOf<Self> {
@@ -47,6 +53,23 @@ struct HomeViewReducer {
                     section.append(SectionData(title: item.title, data: data[item]!))
                 }
                 state.sections = section
+                return .none
+            case let .searchQueryChanged(query):
+                state.searchQuery = query
+                guard !state.searchQuery.isEmpty else {
+                    state.searchedResults = []
+                    return .cancel(id: CancelID.search)
+                }
+                return .none
+            case .searchQueryChangeDebounced:
+                guard !state.searchQuery.isEmpty else { return .none }
+                return .run { [query = state.searchQuery] send in
+                    let result = try await apiClient.searchMovies(query)
+                    await send(.searchResultFetched(result))
+                }
+                .cancellable(id: CancelID.search)
+            case let .searchResultFetched(movies):
+                state.searchedResults = movies
                 return .none
             }
         }

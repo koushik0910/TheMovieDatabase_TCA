@@ -18,7 +18,7 @@ struct Movie: Decodable, Hashable, Identifiable {
     let id: Int
     let overview: String
     let popularity: Double
-    let posterPath: String
+    let posterPath: String?
     let releaseDate: String?
     let firstAirDate: String?
     let title: String?
@@ -37,12 +37,14 @@ struct Movie: Decodable, Hashable, Identifiable {
     }
     
     var posterFullPath: String {
-        "https://image.tmdb.org/t/p/w500" + posterPath
-    }
-    var backdropFullPath: String {
-        "https://image.tmdb.org/t/p/w500" + (backdropPath ?? "")
+        guard let posterPath else { return "" }
+        return "https://image.tmdb.org/t/p/w500" + posterPath
     }
     
+    var backdropFullPath: String {
+        guard let backdropPath else { return "" }
+        return "https://image.tmdb.org/t/p/w500" + backdropPath
+    }
     
     enum CodingKeys: String, CodingKey {
         case adult

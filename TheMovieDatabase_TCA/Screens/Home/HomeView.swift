@@ -14,14 +14,25 @@ struct HomeView: View {
     var body: some View {
         NavigationStack {
             ScrollView{
-                VStack(spacing: 20){
-                    ForEach(viewStore.sections){section in
-                        HorizontalMovieView(headerTitle: section.title, movies: section.data)
+                if viewStore.searchQuery.isEmpty {
+                    VStack(spacing: 20){
+                        ForEach(viewStore.sections){section in
+                            HorizontalMovieView(headerTitle: section.title, movies: section.data)
+                        }
                     }
+                }else{
+                    VerticalSearchView(movies: viewStore.searchedResults)
                 }
             }
+            .searchable(text: $viewStore.searchQuery.sending(\.searchQueryChanged))
             .task{
                 viewStore.send(.fetchData)
+            }
+            .task(id: viewStore.searchQuery) {
+                do{
+                    try await Task.sleep(for: .milliseconds(300))
+                    await viewStore.send(.searchQueryChangeDebounced).finish()
+                }catch { }
             }
         }
     }
@@ -30,7 +41,6 @@ struct HomeView: View {
 #Preview {
     HomeView(viewStore: Store(initialState: HomeViewReducer.State(), reducer: { HomeViewReducer() }))
 }
-
 
 struct HorizontalMovieView: View {
     let headerTitle: String
@@ -50,6 +60,20 @@ struct HorizontalMovieView: View {
                 .padding(.horizontal, 20)
             }
             .scrollIndicators(.hidden)
+        }
+    }
+}
+
+
+struct VerticalSearchView: View {
+    let movies: [Movie]
+    var body: some View {
+        ScrollView{
+            LazyVStack{
+                ForEach(movies, id: \.id) { movie in
+                    SearchResultCell(title: movie.titleText, imageURLString: movie.posterFullPath, overview: movie.overview)
+                }
+            }
         }
     }
 }
