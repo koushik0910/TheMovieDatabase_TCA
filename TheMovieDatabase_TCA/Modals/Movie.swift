@@ -46,6 +46,15 @@ struct Movie: Decodable, Hashable, Identifiable {
         return "https://image.tmdb.org/t/p/w500" + backdropPath
     }
     
+    var votingPercentage: String {
+        return String(Int(voteAverage * 10)) + "%"
+    }
+    
+    var runtimeText: String{
+        guard let runtime else { return "N/A"  }
+        return "\(runtime.description) min"
+    }
+    
     enum CodingKeys: String, CodingKey {
         case adult
         case backdropPath = "backdrop_path"

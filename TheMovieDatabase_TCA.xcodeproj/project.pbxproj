@@ -27,6 +27,7 @@
 		705F9D8A2BBF1CDB004B1EA0 /* MovieCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 705F9D892BBF1CDB004B1EA0 /* MovieCollectionView.swift */; };
 		705F9D942BBFB99E004B1EA0 /* DetailsViewReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 705F9D932BBFB99E004B1EA0 /* DetailsViewReducer.swift */; };
 		705F9D962BBFB9BE004B1EA0 /* DetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 705F9D952BBFB9BE004B1EA0 /* DetailsView.swift */; };
+		705F9D982BBFBEC7004B1EA0 /* DetailsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 705F9D972BBFBEC7004B1EA0 /* DetailsCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -50,6 +51,7 @@
 		705F9D892BBF1CDB004B1EA0 /* MovieCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieCollectionView.swift; sourceTree = "<group>"; };
 		705F9D932BBFB99E004B1EA0 /* DetailsViewReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsViewReducer.swift; sourceTree = "<group>"; };
 		705F9D952BBFB9BE004B1EA0 /* DetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsView.swift; sourceTree = "<group>"; };
+		705F9D972BBFBEC7004B1EA0 /* DetailsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -109,6 +111,7 @@
 				705F9D7A2BBEE36D004B1EA0 /* MovieCell.swift */,
 				705F9D802BBEFC7D004B1EA0 /* SearchResultCell.swift */,
 				705F9D892BBF1CDB004B1EA0 /* MovieCollectionView.swift */,
+				705F9D972BBFBEC7004B1EA0 /* DetailsCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -246,6 +249,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				705F9D982BBFBEC7004B1EA0 /* DetailsCell.swift in Sources */,
 				705F9D7D2BBEF81D004B1EA0 /* Section.swift in Sources */,
 				705F9D842BBF06CD004B1EA0 /* MoviesAndTVShowsView.swift in Sources */,
 				705F9D752BBEE1E6004B1EA0 /* HomeViewReducer.swift in Sources */,

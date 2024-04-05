@@ -12,8 +12,18 @@ struct DetailsView: View {
     let viewStore: StoreOf<DetailsViewReducer>
     
     var body: some View {
-        Text("Hello, World!")
-            .navigationBarTitle(Text(viewStore.movie.titleText))
+        ScrollView{
+            DetailsCell(movie: viewStore.movie)
+        }
+        .toolbar {
+            Button(action: {
+                
+            }, label: {
+                Image(systemName: "heart")
+            })
+        }
+        .navigationBarTitleDisplayMode(.inline)
+        
     }
 }
 
