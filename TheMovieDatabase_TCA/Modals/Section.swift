@@ -7,22 +7,11 @@
 
 import Foundation
 
-enum Section: CaseIterable {
-    case trending
-    case popular
-    case tvShows
-    
-    var title: String {
-        switch self {
-        case .trending:
-            return "Trending"
-        case .popular:
-            return "What's Popular"
-        case .tvShows:
-            return "TV Shows"
-        }
-    }
-    
+enum Section:String, CaseIterable {
+    case trending = "Trending"
+    case popular = "What's Popular"
+    case tvShows = "TV Shows"
+
     var urlString: String {
         switch self {
         case .trending:

@@ -15,7 +15,7 @@ struct HomeView: View {
         NavigationStack {
             ScrollView{
                 if viewStore.searchQuery.isEmpty {
-                    VStack(spacing: 20){
+                    VStack{
                         ForEach(viewStore.sections){section in
                             HorizontalMovieView(headerTitle: section.title, movies: section.data)
                         }
@@ -46,18 +46,18 @@ struct HorizontalMovieView: View {
     let headerTitle: String
     let movies: [Movie]
     var body: some View {
-        VStack(alignment:.leading ,spacing: 20){
+        VStack(alignment:.leading ,spacing: 15){
             Text(headerTitle)
                 .bold()
-                .font(.title)
-                .padding(.leading, 16)
+                .font(.title2)
+                .padding(.leading, 15)
             ScrollView(.horizontal) {
-                LazyHGrid(rows: [GridItem(.flexible())], spacing: 20) {
+                LazyHGrid(rows: [GridItem(.flexible())], spacing: 15) {
                     ForEach(movies, id: \.id) { movie in
                         MovieCell(title: movie.titleText, imageURLString: movie.posterFullPath, releaseDate: movie.dateText)
                     }
                 }
-                .padding(.horizontal, 20)
+                .padding(.horizontal, 15)
             }
             .scrollIndicators(.hidden)
         }

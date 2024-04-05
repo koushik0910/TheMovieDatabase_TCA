@@ -21,6 +21,10 @@
 		705F9D7D2BBEF81D004B1EA0 /* Section.swift in Sources */ = {isa = PBXBuildFile; fileRef = 705F9D7C2BBEF81D004B1EA0 /* Section.swift */; };
 		705F9D7F2BBEF83E004B1EA0 /* SectionData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 705F9D7E2BBEF83E004B1EA0 /* SectionData.swift */; };
 		705F9D812BBEFC7D004B1EA0 /* SearchResultCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 705F9D802BBEFC7D004B1EA0 /* SearchResultCell.swift */; };
+		705F9D842BBF06CD004B1EA0 /* MoviesAndTVShowsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 705F9D832BBF06CD004B1EA0 /* MoviesAndTVShowsView.swift */; };
+		705F9D862BBF06E4004B1EA0 /* MoviesAndTVShowsViewReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 705F9D852BBF06E4004B1EA0 /* MoviesAndTVShowsViewReducer.swift */; };
+		705F9D882BBF0D81004B1EA0 /* SortOrder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 705F9D872BBF0D81004B1EA0 /* SortOrder.swift */; };
+		705F9D8A2BBF1CDB004B1EA0 /* MovieCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 705F9D892BBF1CDB004B1EA0 /* MovieCollectionView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,6 +42,10 @@
 		705F9D7C2BBEF81D004B1EA0 /* Section.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Section.swift; sourceTree = "<group>"; };
 		705F9D7E2BBEF83E004B1EA0 /* SectionData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionData.swift; sourceTree = "<group>"; };
 		705F9D802BBEFC7D004B1EA0 /* SearchResultCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultCell.swift; sourceTree = "<group>"; };
+		705F9D832BBF06CD004B1EA0 /* MoviesAndTVShowsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoviesAndTVShowsView.swift; sourceTree = "<group>"; };
+		705F9D852BBF06E4004B1EA0 /* MoviesAndTVShowsViewReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoviesAndTVShowsViewReducer.swift; sourceTree = "<group>"; };
+		705F9D872BBF0D81004B1EA0 /* SortOrder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortOrder.swift; sourceTree = "<group>"; };
+		705F9D892BBF1CDB004B1EA0 /* MovieCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieCollectionView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -96,6 +104,7 @@
 			children = (
 				705F9D7A2BBEE36D004B1EA0 /* MovieCell.swift */,
 				705F9D802BBEFC7D004B1EA0 /* SearchResultCell.swift */,
+				705F9D892BBF1CDB004B1EA0 /* MovieCollectionView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -104,6 +113,7 @@
 			isa = PBXGroup;
 			children = (
 				705F9D712BBEE0E6004B1EA0 /* Home */,
+				705F9D822BBF06B6004B1EA0 /* Movies & TV Shows */,
 			);
 			path = Screens;
 			sourceTree = "<group>";
@@ -114,6 +124,7 @@
 				705F9D762BBEE289004B1EA0 /* Movie.swift */,
 				705F9D7C2BBEF81D004B1EA0 /* Section.swift */,
 				705F9D7E2BBEF83E004B1EA0 /* SectionData.swift */,
+				705F9D872BBF0D81004B1EA0 /* SortOrder.swift */,
 			);
 			path = Modals;
 			sourceTree = "<group>";
@@ -134,6 +145,15 @@
 				705F9D742BBEE1E6004B1EA0 /* HomeViewReducer.swift */,
 			);
 			path = Home;
+			sourceTree = "<group>";
+		};
+		705F9D822BBF06B6004B1EA0 /* Movies & TV Shows */ = {
+			isa = PBXGroup;
+			children = (
+				705F9D832BBF06CD004B1EA0 /* MoviesAndTVShowsView.swift */,
+				705F9D852BBF06E4004B1EA0 /* MoviesAndTVShowsViewReducer.swift */,
+			);
+			path = "Movies & TV Shows";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -213,10 +233,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				705F9D7D2BBEF81D004B1EA0 /* Section.swift in Sources */,
+				705F9D842BBF06CD004B1EA0 /* MoviesAndTVShowsView.swift in Sources */,
 				705F9D752BBEE1E6004B1EA0 /* HomeViewReducer.swift in Sources */,
+				705F9D862BBF06E4004B1EA0 /* MoviesAndTVShowsViewReducer.swift in Sources */,
+				705F9D882BBF0D81004B1EA0 /* SortOrder.swift in Sources */,
 				705F9D792BBEE322004B1EA0 /* APIClient.swift in Sources */,
 				705F9D7B2BBEE36D004B1EA0 /* MovieCell.swift in Sources */,
 				705F9D5D2BBED48B004B1EA0 /* RootView.swift in Sources */,
+				705F9D8A2BBF1CDB004B1EA0 /* MovieCollectionView.swift in Sources */,
 				705F9D772BBEE289004B1EA0 /* Movie.swift in Sources */,
 				705F9D732BBEE1D5004B1EA0 /* HomeView.swift in Sources */,
 				705F9D7F2BBEF83E004B1EA0 /* SectionData.swift in Sources */,

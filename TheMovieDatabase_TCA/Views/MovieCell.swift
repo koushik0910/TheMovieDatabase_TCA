@@ -22,25 +22,26 @@ struct MovieCell: View {
                 } placeholder: {
                     ProgressView()
                 }
-                .frame(width: 160, height: 250)
+                .frame(width: 150, height: 230)
                 .clipShape(RoundedRectangle(cornerRadius: 10))
             }
 
-            VStack(alignment: .leading, spacing: 5){
+            VStack(alignment: .leading){
                 Text(title)
-                    .fontWeight(.bold)
+                    .bold()
+                    .lineLimit(2)
                     .multilineTextAlignment(.leading)
                     .truncationMode(.middle)
                 
                 Text(releaseDate)
-                    .fontWeight(.regular)
             }
+            .font(.callout)
             .foregroundStyle(.black)
             
             Spacer()
             
         }
-        .frame(width: 160, height: 350)
+        .frame(width: 150)
     }
 }
 
