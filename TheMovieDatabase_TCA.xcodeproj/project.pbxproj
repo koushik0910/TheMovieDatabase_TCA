@@ -28,6 +28,8 @@
 		705F9D942BBFB99E004B1EA0 /* DetailsViewReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 705F9D932BBFB99E004B1EA0 /* DetailsViewReducer.swift */; };
 		705F9D962BBFB9BE004B1EA0 /* DetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 705F9D952BBFB9BE004B1EA0 /* DetailsView.swift */; };
 		705F9D982BBFBEC7004B1EA0 /* DetailsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 705F9D972BBFBEC7004B1EA0 /* DetailsCell.swift */; };
+		705F9D9A2BBFCCB6004B1EA0 /* Cast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 705F9D992BBFCCB6004B1EA0 /* Cast.swift */; };
+		705F9D9C2BBFD02B004B1EA0 /* CastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 705F9D9B2BBFD02B004B1EA0 /* CastView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -52,6 +54,8 @@
 		705F9D932BBFB99E004B1EA0 /* DetailsViewReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsViewReducer.swift; sourceTree = "<group>"; };
 		705F9D952BBFB9BE004B1EA0 /* DetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsView.swift; sourceTree = "<group>"; };
 		705F9D972BBFBEC7004B1EA0 /* DetailsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsCell.swift; sourceTree = "<group>"; };
+		705F9D992BBFCCB6004B1EA0 /* Cast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cast.swift; sourceTree = "<group>"; };
+		705F9D9B2BBFD02B004B1EA0 /* CastView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CastView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -112,6 +116,7 @@
 				705F9D802BBEFC7D004B1EA0 /* SearchResultCell.swift */,
 				705F9D892BBF1CDB004B1EA0 /* MovieCollectionView.swift */,
 				705F9D972BBFBEC7004B1EA0 /* DetailsCell.swift */,
+				705F9D9B2BBFD02B004B1EA0 /* CastView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -133,6 +138,7 @@
 				705F9D7C2BBEF81D004B1EA0 /* Section.swift */,
 				705F9D7E2BBEF83E004B1EA0 /* SectionData.swift */,
 				705F9D872BBF0D81004B1EA0 /* SortOrder.swift */,
+				705F9D992BBFCCB6004B1EA0 /* Cast.swift */,
 			);
 			path = Modals;
 			sourceTree = "<group>";
@@ -251,6 +257,8 @@
 			files = (
 				705F9D982BBFBEC7004B1EA0 /* DetailsCell.swift in Sources */,
 				705F9D7D2BBEF81D004B1EA0 /* Section.swift in Sources */,
+				705F9D9A2BBFCCB6004B1EA0 /* Cast.swift in Sources */,
+				705F9D9C2BBFD02B004B1EA0 /* CastView.swift in Sources */,
 				705F9D842BBF06CD004B1EA0 /* MoviesAndTVShowsView.swift in Sources */,
 				705F9D752BBEE1E6004B1EA0 /* HomeViewReducer.swift in Sources */,
 				705F9D862BBF06E4004B1EA0 /* MoviesAndTVShowsViewReducer.swift in Sources */,

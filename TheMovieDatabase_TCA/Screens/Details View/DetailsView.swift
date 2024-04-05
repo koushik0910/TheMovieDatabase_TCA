@@ -14,6 +14,12 @@ struct DetailsView: View {
     var body: some View {
         ScrollView{
             DetailsCell(movie: viewStore.movie)
+            if let castDetails = viewStore.casts {
+                CastDetailsView(casts: castDetails)
+            }
+        }
+        .task {
+            viewStore.send(.fetchCastDetails)
         }
         .toolbar {
             Button(action: {
@@ -23,7 +29,6 @@ struct DetailsView: View {
             })
         }
         .navigationBarTitleDisplayMode(.inline)
-        
     }
 }
 
@@ -31,4 +36,26 @@ struct DetailsView: View {
     DetailsView(viewStore: Store(initialState: DetailsViewReducer.State(movie: Movie.mockData()), reducer: {
         DetailsViewReducer()
     }))
+}
+
+struct CastDetailsView: View {
+    let casts: [Cast]
+    var body: some View {
+        VStack(alignment: .leading, spacing: 0){
+            Text("Casts")
+                .bold()
+                .font(.title2)
+                .padding(.leading)
+            ScrollView(.horizontal) {
+                LazyHGrid(rows: [GridItem(.flexible())], spacing: 20){
+                    ForEach(casts) {cast  in
+                        CastView(cast: cast)
+                    }
+                }
+                .padding(.horizontal)
+            }
+            .scrollIndicators(.hidden)
+        }
+       
+    }
 }

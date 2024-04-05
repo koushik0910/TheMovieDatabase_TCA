@@ -55,7 +55,7 @@ struct HorizontalMovieView: View {
                 .padding(.leading, 15)
             ScrollView(.horizontal) {
                 LazyHGrid(rows: [GridItem(.flexible())], spacing: 15) {
-                    ForEach(movies, id: \.id) { movie in
+                    ForEach(movies) { movie in
                         NavigationLink(state: DetailsViewReducer.State(movie: movie)) {
                             MovieCell(title: movie.titleText, imageURLString: movie.posterFullPath, releaseDate: movie.dateText)
                         }
@@ -68,14 +68,15 @@ struct HorizontalMovieView: View {
     }
 }
 
-
 struct VerticalSearchView: View {
     let movies: [Movie]
     var body: some View {
         ScrollView{
             LazyVStack{
-                ForEach(movies, id: \.id) { movie in
-                    SearchResultCell(title: movie.titleText, imageURLString: movie.posterFullPath, overview: movie.overview)
+                ForEach(movies) { movie in
+                    NavigationLink(state: DetailsViewReducer.State(movie: movie)) {
+                        SearchResultCell(title: movie.titleText, imageURLString: movie.posterFullPath, overview: movie.overview)
+                    }
                 }
             }
         }

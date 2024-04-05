@@ -10,11 +10,12 @@ import Foundation
 
 @Reducer
 struct MoviesAndTVShowsViewReducer {
+    
     @ObservableState
     struct State: Equatable {
         var currentSortOrder: SortOrder = .nowPlaying
         var movies: [Movie] = []
-        var isMovie: Bool
+        let isMovie: Bool
         var path = StackState<DetailsViewReducer.State>()
     }
     
