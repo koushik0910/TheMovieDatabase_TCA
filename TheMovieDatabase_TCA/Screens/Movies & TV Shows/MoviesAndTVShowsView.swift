@@ -9,9 +9,9 @@ import SwiftUI
 import ComposableArchitecture
 
 struct MoviesAndTVShowsView: View {
-    var viewStore: StoreOf<MoviesAndTVShowsViewReducer>
+    @Bindable var viewStore: StoreOf<MoviesAndTVShowsViewReducer>
     var body: some View {
-        NavigationStack {
+        NavigationStack(path: $viewStore.scope(state: \.path, action: \.path)){
             MovieCollectionView(movies: viewStore.movies)
                 .task(id: viewStore.currentSortOrder){
                     viewStore.send(.fetchData)
@@ -22,6 +22,8 @@ struct MoviesAndTVShowsView: View {
                     }
                 }
                 .navigationTitle(viewStore.currentSortOrder.rawValue)
+        }destination: { store in
+            DetailsView(viewStore: store)
         }
     }
 }

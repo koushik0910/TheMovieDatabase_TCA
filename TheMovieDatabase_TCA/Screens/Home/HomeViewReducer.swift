@@ -15,6 +15,7 @@ struct HomeViewReducer {
         var sections : [SectionData] = []
         var searchQuery = ""
         var searchedResults: [Movie] = []
+        var path = StackState<DetailsViewReducer.State>()
     }
     
     enum Action {
@@ -23,6 +24,7 @@ struct HomeViewReducer {
         case searchQueryChanged(String)
         case searchQueryChangeDebounced
         case searchResultFetched([Movie])
+        case path(StackAction<DetailsViewReducer.State, DetailsViewReducer.Action>)
     }
     
     private enum CancelID { case search }
@@ -71,7 +73,12 @@ struct HomeViewReducer {
             case let .searchResultFetched(movies):
                 state.searchedResults = movies
                 return .none
+            case .path(_):
+                return .none
             }
+        }
+        .forEach(\.path, action: \.path) {
+            DetailsViewReducer()
         }
     }
 }

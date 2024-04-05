@@ -14,8 +14,9 @@ struct MovieCollectionView: View {
         ScrollView{
             LazyVGrid(columns: columns, spacing: 10) {
                 ForEach(movies, id: \.id) { movie in
-                    MovieCell(title: movie.titleText, imageURLString: movie.posterFullPath, releaseDate: movie.dateText)
-                    
+                    NavigationLink(state: DetailsViewReducer.State(movie: movie)) {
+                        MovieCell(title: movie.titleText, imageURLString: movie.posterFullPath, releaseDate: movie.dateText)
+                    }
                 }
             }
             .padding()

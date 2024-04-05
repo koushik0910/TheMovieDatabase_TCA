@@ -12,7 +12,7 @@ struct HomeView: View {
     @Bindable var viewStore: StoreOf<HomeViewReducer>
     
     var body: some View {
-        NavigationStack {
+        NavigationStack(path: $viewStore.scope(state: \.path, action: \.path)){
             ScrollView{
                 if viewStore.searchQuery.isEmpty {
                     VStack{
@@ -34,6 +34,8 @@ struct HomeView: View {
                     await viewStore.send(.searchQueryChangeDebounced).finish()
                 }catch { }
             }
+        }destination: { store in
+            DetailsView(viewStore: store)
         }
     }
 }
@@ -54,7 +56,9 @@ struct HorizontalMovieView: View {
             ScrollView(.horizontal) {
                 LazyHGrid(rows: [GridItem(.flexible())], spacing: 15) {
                     ForEach(movies, id: \.id) { movie in
-                        MovieCell(title: movie.titleText, imageURLString: movie.posterFullPath, releaseDate: movie.dateText)
+                        NavigationLink(state: DetailsViewReducer.State(movie: movie)) {
+                            MovieCell(title: movie.titleText, imageURLString: movie.posterFullPath, releaseDate: movie.dateText)
+                        }
                     }
                 }
                 .padding(.horizontal, 15)

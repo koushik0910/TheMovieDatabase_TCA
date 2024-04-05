@@ -15,12 +15,14 @@ struct MoviesAndTVShowsViewReducer {
         var currentSortOrder: SortOrder = .nowPlaying
         var movies: [Movie] = []
         var isMovie: Bool
+        var path = StackState<DetailsViewReducer.State>()
     }
     
     enum Action {
         case fetchData
         case dataFetched([Movie])
         case sortOrderChanged(SortOrder)
+        case path(StackAction<DetailsViewReducer.State, DetailsViewReducer.Action>)
     }
     
     @Dependency(\.apiClient) var apiClient
@@ -41,7 +43,12 @@ struct MoviesAndTVShowsViewReducer {
                 guard state.currentSortOrder != order else { return .none }
                 state.currentSortOrder = order
                 return .none
+            case .path(_):
+                return .none
             }
+        }
+        .forEach(\.path, action: \.path) {
+            DetailsViewReducer()
         }
     }
 }

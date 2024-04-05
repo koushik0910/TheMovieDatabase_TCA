@@ -25,6 +25,8 @@
 		705F9D862BBF06E4004B1EA0 /* MoviesAndTVShowsViewReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 705F9D852BBF06E4004B1EA0 /* MoviesAndTVShowsViewReducer.swift */; };
 		705F9D882BBF0D81004B1EA0 /* SortOrder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 705F9D872BBF0D81004B1EA0 /* SortOrder.swift */; };
 		705F9D8A2BBF1CDB004B1EA0 /* MovieCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 705F9D892BBF1CDB004B1EA0 /* MovieCollectionView.swift */; };
+		705F9D942BBFB99E004B1EA0 /* DetailsViewReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 705F9D932BBFB99E004B1EA0 /* DetailsViewReducer.swift */; };
+		705F9D962BBFB9BE004B1EA0 /* DetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 705F9D952BBFB9BE004B1EA0 /* DetailsView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -46,6 +48,8 @@
 		705F9D852BBF06E4004B1EA0 /* MoviesAndTVShowsViewReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoviesAndTVShowsViewReducer.swift; sourceTree = "<group>"; };
 		705F9D872BBF0D81004B1EA0 /* SortOrder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortOrder.swift; sourceTree = "<group>"; };
 		705F9D892BBF1CDB004B1EA0 /* MovieCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieCollectionView.swift; sourceTree = "<group>"; };
+		705F9D932BBFB99E004B1EA0 /* DetailsViewReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsViewReducer.swift; sourceTree = "<group>"; };
+		705F9D952BBFB9BE004B1EA0 /* DetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -112,6 +116,7 @@
 		705F9D6C2BBEE08A004B1EA0 /* Screens */ = {
 			isa = PBXGroup;
 			children = (
+				705F9D922BBFB946004B1EA0 /* Details View */,
 				705F9D712BBEE0E6004B1EA0 /* Home */,
 				705F9D822BBF06B6004B1EA0 /* Movies & TV Shows */,
 			);
@@ -154,6 +159,15 @@
 				705F9D852BBF06E4004B1EA0 /* MoviesAndTVShowsViewReducer.swift */,
 			);
 			path = "Movies & TV Shows";
+			sourceTree = "<group>";
+		};
+		705F9D922BBFB946004B1EA0 /* Details View */ = {
+			isa = PBXGroup;
+			children = (
+				705F9D932BBFB99E004B1EA0 /* DetailsViewReducer.swift */,
+				705F9D952BBFB9BE004B1EA0 /* DetailsView.swift */,
+			);
+			path = "Details View";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -245,6 +259,8 @@
 				705F9D732BBEE1D5004B1EA0 /* HomeView.swift in Sources */,
 				705F9D7F2BBEF83E004B1EA0 /* SectionData.swift in Sources */,
 				705F9D702BBEE0B9004B1EA0 /* NetworkUtility.swift in Sources */,
+				705F9D942BBFB99E004B1EA0 /* DetailsViewReducer.swift in Sources */,
+				705F9D962BBFB9BE004B1EA0 /* DetailsView.swift in Sources */,
 				705F9D812BBEFC7D004B1EA0 /* SearchResultCell.swift in Sources */,
 				705F9D5B2BBED48B004B1EA0 /* TheMovieDatabase_TCAApp.swift in Sources */,
 			);
