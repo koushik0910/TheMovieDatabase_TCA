@@ -25,7 +25,6 @@ struct Movie: Decodable, Hashable, Identifiable {
     let name: String?
     let voteAverage: Double
     let voteCount: Int
-    let runtime: Int?
     let tagline: String?
     
     var titleText: String {
@@ -50,11 +49,6 @@ struct Movie: Decodable, Hashable, Identifiable {
         return String(Int(voteAverage * 10)) + "%"
     }
     
-    var runtimeText: String{
-        guard let runtime else { return "N/A"  }
-        return "\(runtime.description) min"
-    }
-    
     enum CodingKeys: String, CodingKey {
         case adult
         case backdropPath = "backdrop_path"
@@ -67,12 +61,11 @@ struct Movie: Decodable, Hashable, Identifiable {
         case name
         case voteAverage = "vote_average"
         case voteCount = "vote_count"
-        case runtime
         case tagline
     }
     
     
     static func mockData() -> Movie {
-        return Movie(adult: true, backdropPath: "/kXfqcdQKsToO0OUXHcrrNCHDBzO.jpg", id: 278, overview: "Framed in the 1940s for the double murder of his wife and her lover, upstanding banker Andy Dufresne begins a new life at the Shawshank prison, where he puts his accounting skills to work for an amoral warden. During his long stretch in prison, Dufresne comes to be admired by the other inmates -- including an older prisoner named Red -- for his integrity and unquenchable sense of hope.", popularity: 155.042, posterPath: "/q6y0Go1tsGEsmtFryDOJo3dEmqu.jpg", releaseDate: "1994-09-23", firstAirDate: nil, title: "The Shawshank Redemption", name: nil, voteAverage: 8.704, voteCount: 25610, runtime: 120, tagline: "The Shawshank Redemption")
+        return Movie(adult: true, backdropPath: "/kXfqcdQKsToO0OUXHcrrNCHDBzO.jpg", id: 278, overview: "Framed in the 1940s for the double murder of his wife and her lover, upstanding banker Andy Dufresne begins a new life at the Shawshank prison, where he puts his accounting skills to work for an amoral warden. During his long stretch in prison, Dufresne comes to be admired by the other inmates -- including an older prisoner named Red -- for his integrity and unquenchable sense of hope.", popularity: 155.042, posterPath: "/q6y0Go1tsGEsmtFryDOJo3dEmqu.jpg", releaseDate: "1994-09-23", firstAirDate: nil, title: "The Shawshank Redemption", name: nil, voteAverage: 8.704, voteCount: 25610, tagline: "The Shawshank Redemption")
     }
 }

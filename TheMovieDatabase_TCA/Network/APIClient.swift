@@ -18,8 +18,14 @@ struct APIClient {
 extension APIClient: DependencyKey {
   static let liveValue = Self (
     fetchMovies: { urlString in
-        let response: ResponseData = try await NetworkUtility.shared.request(urlString: urlString)
-        return response.results
+        do{
+            let response: ResponseData = try await NetworkUtility.shared.request(urlString: urlString)
+            return response.results
+        }catch{
+            print(error.localizedDescription)
+            return []
+        }
+        
     },
     searchMovies: { query in
         let encodedQuery = query.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)

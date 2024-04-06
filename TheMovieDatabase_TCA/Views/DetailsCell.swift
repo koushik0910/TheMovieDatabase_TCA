@@ -16,7 +16,7 @@ struct DetailsCell: View {
             
             TitleAndUserScoreView(title: movie.titleText, voteAverage: movie.voteAverage, votingPercentage: movie.votingPercentage)
             
-            RuntimeAndReleaseDateView(releaseDate: movie.dateText, runtime: movie.runtimeText)
+            ReleaseDateView(releaseDate: movie.dateText)
             
             TaglineAndOverviewView(tagline: movie.tagline, overview: movie.overview)
         }
@@ -86,19 +86,13 @@ struct TitleAndUserScoreView: View {
     }
 }
 
-struct RuntimeAndReleaseDateView: View {
+struct ReleaseDateView: View {
     let releaseDate: String
-    let runtime: String
     var body: some View {
         HStack{
-            Spacer()
             Text(releaseDate)
-            Image(systemName: "circle.fill")
-                .resizable()
-                .frame(width: 6, height: 6)
-            Text(runtime)
-            Spacer()
         }
+        .frame(maxWidth: .infinity)
         .padding(.vertical)
         .background(.black)
     }
