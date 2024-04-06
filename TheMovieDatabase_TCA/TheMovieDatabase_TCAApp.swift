@@ -6,12 +6,15 @@
 //
 
 import SwiftUI
+import ComposableArchitecture
 
 @main
 struct TheMovieDatabase_TCAApp: App {
     var body: some Scene {
         WindowGroup {
-            RootView()
+            RootView(viewStore: Store(initialState: RootViewReducer.State(), reducer: {
+                RootViewReducer()
+            }))
         }
     }
 }

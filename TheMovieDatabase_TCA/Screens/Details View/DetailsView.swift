@@ -14,7 +14,7 @@ struct DetailsView: View {
     var body: some View {
         ScrollView{
             DetailsCell(movie: viewStore.movie)
-            if let castDetails = viewStore.casts {
+            if let castDetails = viewStore.cast {
                 CastDetailsView(casts: castDetails)
             }
         }
@@ -23,7 +23,7 @@ struct DetailsView: View {
         }
         .toolbar {
             Button(action: {
-                
+                viewStore.send(.favouriteButtonTapped)
             }, label: {
                 Image(systemName: "heart")
             })

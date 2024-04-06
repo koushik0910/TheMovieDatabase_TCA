@@ -10,12 +10,14 @@ import Foundation
 
 @Reducer
 struct HomeViewReducer {
+    
     @ObservableState
     struct State: Equatable {
         var sections : [SectionData] = []
         var searchQuery = ""
         var searchedResults: [Movie] = []
         var path = StackState<DetailsViewReducer.State>()
+        var favourites = Favourites()
     }
     
     enum Action {
@@ -41,11 +43,11 @@ struct HomeViewReducer {
                                 return try await (item, apiClient.fetchMovies(item.urlString))
                             }
                         }
-                      var result = [Section: [Movie]]()
-                      for try await item in group{
-                          result[item.0] = item.1
-                      }
-                      return result
+                        var result = [Section: [Movie]]()
+                        for try await item in group{
+                            result[item.0] = item.1
+                        }
+                        return result
                     }
                     await send(.dataFetched(data))
                 }
@@ -72,6 +74,9 @@ struct HomeViewReducer {
                 .cancellable(id: CancelID.search)
             case let .searchResultFetched(movies):
                 state.searchedResults = movies
+                return .none
+            case .path(.element(id: _, action: .delegate(.addOrRemoveFavourites(let movie)))):
+                state.favourites.isFavourite(movie) ? state.favourites.removeMovies(movie) : state.favourites.addMovies(movie)
                 return .none
             case .path(_):
                 return .none

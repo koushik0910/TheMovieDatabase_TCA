@@ -9,34 +9,43 @@ import SwiftUI
 import ComposableArchitecture
 
 struct RootView: View {
-    static let homeStore = Store(initialState: HomeViewReducer.State()) { HomeViewReducer() }
-    
-    static let moviesStore = Store(initialState: MoviesAndTVShowsViewReducer.State(isMovie: true)) { MoviesAndTVShowsViewReducer() }
-    
-    static let tvShowStore = Store(initialState: MoviesAndTVShowsViewReducer.State(isMovie: false)) { MoviesAndTVShowsViewReducer() }
-    
+    @Bindable var viewStore: StoreOf<RootViewReducer>
     
     var body: some View {
-        TabView{
-            HomeView(viewStore: RootView.homeStore)
+        TabView(selection: $viewStore.currentTab.sending(\.selectTab)){
+            
+            HomeView(viewStore: self.viewStore.scope(state: \.home, action: \.home))
+                .tag(RootViewReducer.Tab.home)
                 .tabItem {
                     Label("Home", systemImage: "house")
             }
             
-            MoviesAndTVShowsView(viewStore: RootView.moviesStore)
+            MoviesAndTVShowsView(viewStore: self.viewStore.scope(state: \.movies, action: \.movies))
+                .tag(RootViewReducer.Tab.movies)
                 .tabItem {
                     Label("Movies", systemImage: "movieclapper")
             }
             
-            MoviesAndTVShowsView(viewStore: RootView.tvShowStore)
+            MoviesAndTVShowsView(viewStore: self.viewStore.scope(state: \.tvShows, action: \.tvShows))
+                .tag(RootViewReducer.Tab.tvShows)
                 .tabItem {
                     Label("TV Shows", systemImage: "play.tv")
             }
+            
+            FavouritesView(viewStore: self.viewStore.scope(state: \.favourites, action: \.favourites))
+                .tag(RootViewReducer.Tab.favourites)
+                .tabItem {
+                    Label("Favourites", systemImage: "heart")
+                } 
         }
         .tint(.black)
     }
 }
 
 #Preview {
-    RootView()
+    RootView(
+        viewStore: Store(initialState: RootViewReducer.State()) {
+          RootViewReducer()
+      }
+    )
 }

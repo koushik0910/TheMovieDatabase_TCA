@@ -17,6 +17,7 @@ struct MoviesAndTVShowsViewReducer {
         var movies: [Movie] = []
         let isMovie: Bool
         var path = StackState<DetailsViewReducer.State>()
+        var favourites = Favourites()
     }
     
     enum Action {
@@ -43,6 +44,9 @@ struct MoviesAndTVShowsViewReducer {
             case let .sortOrderChanged(order):
                 guard state.currentSortOrder != order else { return .none }
                 state.currentSortOrder = order
+                return .none
+            case .path(.element(id: _, action: .delegate(.addOrRemoveFavourites(let movie)))):
+                state.favourites.isFavourite(movie) ? state.favourites.removeMovies(movie) : state.favourites.addMovies(movie)
                 return .none
             case .path(_):
                 return .none

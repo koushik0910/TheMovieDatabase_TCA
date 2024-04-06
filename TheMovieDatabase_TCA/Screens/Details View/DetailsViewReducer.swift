@@ -14,12 +14,18 @@ struct DetailsViewReducer {
     @ObservableState
     struct State: Equatable {
         let movie: Movie
-        var casts: [Cast]?
+        var cast: [Cast]?
     }
     
     enum Action {
         case fetchCastDetails
         case castDetailsFetched([Cast]?)
+        case delegate(Delegate)
+        case favouriteButtonTapped
+        
+        enum Delegate: Equatable {
+            case addOrRemoveFavourites(Movie)
+        }
     }
     
     @Dependency(\.apiClient) var apiClient
@@ -32,11 +38,15 @@ struct DetailsViewReducer {
                     let result = try await apiClient.fetchCastDetails(movieId)
                     await send(.castDetailsFetched(result))
                 }
-            case let .castDetailsFetched(casts):
-                state.casts = casts
+            case let .castDetailsFetched(cast):
+                state.cast = cast
                 return .none
-            case .favouriteTapped:
+            case .delegate(_):
                 return .none
+            case .favouriteButtonTapped:
+                return .run { [movie = state.movie] send in
+                    await send(.delegate(.addOrRemoveFavourites(movie)))
+                }
             }
         }
     }
