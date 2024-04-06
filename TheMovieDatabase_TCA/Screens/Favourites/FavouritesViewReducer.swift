@@ -25,7 +25,7 @@ struct FavouritesViewReducer {
         Reduce { state, action in
             switch action {
             case .path(.element(id: _, action: .delegate(.addOrRemoveFavourites(let movie)))):
-                state.favourites.isFavourite(movie) ? state.favourites.removeMovies(movie) : state.favourites.addMovies(movie)
+                state.favourites.addOrRemoveMovies(movie)
                 return .none
             case .path(_):
                 return .none
