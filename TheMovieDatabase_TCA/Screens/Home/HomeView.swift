@@ -48,11 +48,11 @@ struct HorizontalMovieView: View {
     let headerTitle: String
     let movies: [Movie]
     var body: some View {
-        VStack(alignment:.leading ,spacing: 15){
+        VStack(alignment:.leading){
             Text(headerTitle)
                 .bold()
                 .font(.title2)
-                .padding(.leading, 15)
+                .padding()
             ScrollView(.horizontal) {
                 LazyHGrid(rows: [GridItem(.flexible())], spacing: 15) {
                     ForEach(movies) { movie in
@@ -61,7 +61,7 @@ struct HorizontalMovieView: View {
                         }
                     }
                 }
-                .padding(.horizontal, 15)
+                .padding(.horizontal)
             }
             .scrollIndicators(.hidden)
         }

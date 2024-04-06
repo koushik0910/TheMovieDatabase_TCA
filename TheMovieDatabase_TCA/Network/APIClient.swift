@@ -12,8 +12,9 @@ struct APIClient {
     var fetchMovies: (String) async throws -> [Movie]
     var searchMovies: (String) async throws -> [Movie]
     var fetchCastDetails: (Int) async throws -> [Cast]?
+    var fetchReviews: (Int) async throws -> [Review]?
 }
-    
+
 extension APIClient: DependencyKey {
   static let liveValue = Self (
     fetchMovies: { urlString in
@@ -38,6 +39,16 @@ extension APIClient: DependencyKey {
         do{
             let response: CastResponse = try await NetworkUtility.shared.request(urlString: urlString)
             return response.cast
+        }catch{
+            print(error.localizedDescription)
+            return nil
+        }
+    },
+    fetchReviews: { movieId in
+        let urlString = "https://api.themoviedb.org/3/movie/\(movieId)/reviews?api_key=909594533c98883408adef5d56143539"
+        do{
+            let response: ReviewResponse = try await NetworkUtility.shared.request(urlString: urlString)
+            return response.results
         }catch{
             print(error.localizedDescription)
             return nil

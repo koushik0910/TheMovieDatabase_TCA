@@ -15,11 +15,12 @@ struct DetailsViewReducer {
     struct State: Equatable {
         let movie: Movie
         var cast: [Cast]?
+        var reviews: [Review]?
     }
     
     enum Action {
-        case fetchCastDetails
-        case castDetailsFetched([Cast]?)
+        case fetchCastAndReviewDetails
+        case castAndReviewDetailsFetched([Cast]?, [Review]?)
         case delegate(Delegate)
         case favouriteButtonTapped
         
@@ -33,13 +34,15 @@ struct DetailsViewReducer {
     var body: some ReducerOf<Self> {
         Reduce { state, action in
             switch action {
-            case .fetchCastDetails:
+            case .fetchCastAndReviewDetails:
                 return .run { [movieId = state.movie.id] send in
-                    let result = try await apiClient.fetchCastDetails(movieId)
-                    await send(.castDetailsFetched(result))
+                    async let castDetails = apiClient.fetchCastDetails(movieId)
+                    async let reviews = apiClient.fetchReviews(movieId)
+                    await send(.castAndReviewDetailsFetched(try castDetails, try reviews))
                 }
-            case let .castDetailsFetched(cast):
+            case let .castAndReviewDetailsFetched(cast, reviews):
                 state.cast = cast
+                state.reviews = reviews
                 return .none
             case .delegate(_):
                 return .none

@@ -14,12 +14,16 @@ struct DetailsView: View {
     var body: some View {
         ScrollView{
             DetailsCell(movie: viewStore.movie)
-            if let castDetails = viewStore.cast {
+            if let castDetails = viewStore.cast, !castDetails.isEmpty {
                 CastDetailsView(casts: castDetails)
+            }
+            
+            if let reviews = viewStore.reviews, let review = reviews.first{
+                SocialView(review: review)
             }
         }
         .task {
-            viewStore.send(.fetchCastDetails)
+            viewStore.send(.fetchCastAndReviewDetails)
         }
         .toolbar {
             Button(action: {
@@ -47,7 +51,7 @@ struct CastDetailsView: View {
                 .font(.title2)
                 .padding(.leading)
             ScrollView(.horizontal) {
-                LazyHGrid(rows: [GridItem(.flexible())], spacing: 20){
+                LazyHGrid(rows: [GridItem(.flexible())], spacing: 15){
                     ForEach(casts) {cast  in
                         CastView(cast: cast)
                     }
@@ -59,3 +63,19 @@ struct CastDetailsView: View {
        
     }
 }
+
+struct SocialView: View {
+    let review: Review
+    var body: some View {
+        VStack(alignment: .leading, spacing: 10){
+            Text("Social")
+                .bold()
+                .font(.title2)
+            
+            ReviewView(review: review)
+        }
+        .padding(.horizontal)
+    }
+}
+
+
