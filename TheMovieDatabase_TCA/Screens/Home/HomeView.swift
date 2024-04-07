@@ -22,6 +22,7 @@ struct HomeView: View {
                     VerticalSearchView(movies: viewStore.searchedResults, favourites: viewStore.favourites)
                 }
             }
+            .navigationTitle("TMDB")
             .searchable(text: $viewStore.searchQuery.sending(\.searchQueryChanged))
             .task {
                 viewStore.send(.fetchData)
