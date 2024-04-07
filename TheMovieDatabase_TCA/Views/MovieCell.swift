@@ -14,18 +14,15 @@ struct MovieCell: View {
     
     var body: some View {
         VStack(alignment: .leading) {
-            
-            ZStack(alignment: .bottomLeading){
-                AsyncImage(url: URL(string: imageURLString)) { image in
-                    image.resizable()
-                        .aspectRatio(contentMode: .fill)
-                } placeholder: {
-                    ProgressView()
-                }
-                .frame(width: 150, height: 230)
-                .clipShape(RoundedRectangle(cornerRadius: 10))
+            AsyncImage(url: URL(string: imageURLString)) { image in
+                image.resizable()
+                    .aspectRatio(contentMode: .fill)
+            } placeholder: {
+                ProgressView()
             }
-
+            .frame(width: 150, height: 230)
+            .clipShape(RoundedRectangle(cornerRadius: 10))
+            
             VStack(alignment: .leading){
                 Text(title)
                     .bold()

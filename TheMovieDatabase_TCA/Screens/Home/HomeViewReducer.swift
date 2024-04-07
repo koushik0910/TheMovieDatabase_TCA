@@ -54,7 +54,7 @@ struct HomeViewReducer {
             case let .dataFetched(data):
                 var section: [SectionData] = []
                 for item in Section.allCases {
-                    section.append(SectionData(title: item.rawValue, data: data[item]!))
+                    section.append(SectionData(id: item, title: item.rawValue, data: data[item]!))
                 }
                 state.sections = section
                 return .none

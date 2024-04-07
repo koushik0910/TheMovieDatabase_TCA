@@ -8,11 +8,7 @@
 import Foundation
 
 struct SectionData: Identifiable, Equatable {
-    var id: String { UUID().uuidString }
+    let id: Section
     let title: String
     let data: [Movie]
-    
-    static func == (lhs: SectionData, rhs: SectionData) -> Bool {
-        lhs.id == rhs.id
-    }
 }

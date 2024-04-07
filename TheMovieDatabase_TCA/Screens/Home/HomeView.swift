@@ -15,17 +15,15 @@ struct HomeView: View {
         NavigationStack(path: $viewStore.scope(state: \.path, action: \.path)){
             ScrollView{
                 if viewStore.searchQuery.isEmpty {
-                    VStack{
-                        ForEach(viewStore.sections){section in
-                            HorizontalMovieView(headerTitle: section.title, movies: section.data, favourites: viewStore.favourites)
-                        }
+                    ForEach(viewStore.sections){ section in
+                        HorizontalMovieView(headerTitle: section.title, movies: section.data, favourites: viewStore.favourites)
                     }
                 }else{
                     VerticalSearchView(movies: viewStore.searchedResults, favourites: viewStore.favourites)
                 }
             }
             .searchable(text: $viewStore.searchQuery.sending(\.searchQueryChanged))
-            .task{
+            .task {
                 viewStore.send(.fetchData)
             }
             .task(id: viewStore.searchQuery) {
@@ -56,7 +54,7 @@ struct HorizontalMovieView: View {
                 .font(.title2)
                 .padding()
             ScrollView(.horizontal) {
-                LazyHGrid(rows: [GridItem(.flexible())], spacing: 15) {
+                LazyHStack(spacing: 15) {
                     ForEach(movies) { movie in
                         NavigationLink(state: DetailsViewReducer.State(movie: movie, favourites: favourites)) {
                             MovieCell(title: movie.titleText, imageURLString: movie.posterFullPath, releaseDate: movie.dateText)
