@@ -17,11 +17,11 @@ struct HomeView: View {
                 if viewStore.searchQuery.isEmpty {
                     VStack{
                         ForEach(viewStore.sections){section in
-                            HorizontalMovieView(headerTitle: section.title, movies: section.data)
+                            HorizontalMovieView(headerTitle: section.title, movies: section.data, favourites: viewStore.favourites)
                         }
                     }
                 }else{
-                    VerticalSearchView(movies: viewStore.searchedResults)
+                    VerticalSearchView(movies: viewStore.searchedResults, favourites: viewStore.favourites)
                 }
             }
             .searchable(text: $viewStore.searchQuery.sending(\.searchQueryChanged))
@@ -47,6 +47,8 @@ struct HomeView: View {
 struct HorizontalMovieView: View {
     let headerTitle: String
     let movies: [Movie]
+    let favourites: Favourites
+    
     var body: some View {
         VStack(alignment:.leading){
             Text(headerTitle)
@@ -56,7 +58,7 @@ struct HorizontalMovieView: View {
             ScrollView(.horizontal) {
                 LazyHGrid(rows: [GridItem(.flexible())], spacing: 15) {
                     ForEach(movies) { movie in
-                        NavigationLink(state: DetailsViewReducer.State(movie: movie)) {
+                        NavigationLink(state: DetailsViewReducer.State(movie: movie, favourites: favourites)) {
                             MovieCell(title: movie.titleText, imageURLString: movie.posterFullPath, releaseDate: movie.dateText)
                         }
                     }
@@ -70,11 +72,12 @@ struct HorizontalMovieView: View {
 
 struct VerticalSearchView: View {
     let movies: [Movie]
+    let favourites: Favourites
     var body: some View {
         ScrollView{
             LazyVStack{
                 ForEach(movies) { movie in
-                    NavigationLink(state: DetailsViewReducer.State(movie: movie)) {
+                    NavigationLink(state: DetailsViewReducer.State(movie: movie, favourites: favourites)) {
                         SearchResultCell(title: movie.titleText, imageURLString: movie.posterFullPath, overview: movie.overview)
                     }
                 }

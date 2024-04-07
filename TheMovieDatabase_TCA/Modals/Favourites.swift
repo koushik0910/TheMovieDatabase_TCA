@@ -17,4 +17,8 @@ struct Favourites: Equatable {
         }
         movies.insert(movie)
     }
+    
+    func isFavourite(_ movie: Movie) -> Bool{
+        return movies.contains(movie)
+    }
 }

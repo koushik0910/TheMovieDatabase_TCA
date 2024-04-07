@@ -16,6 +16,8 @@ struct DetailsViewReducer {
         let movie: Movie
         var cast: [Cast]?
         var reviews: [Review]?
+        var favourites = Favourites()
+        var isFavourite = false
     }
     
     enum Action {
@@ -23,7 +25,7 @@ struct DetailsViewReducer {
         case castAndReviewDetailsFetched([Cast]?, [Review]?)
         case delegate(Delegate)
         case favouriteButtonTapped
-        
+        case evaluateIsFavourite
         enum Delegate: Equatable {
             case addOrRemoveFavourites(Movie)
         }
@@ -47,9 +49,13 @@ struct DetailsViewReducer {
             case .delegate(_):
                 return .none
             case .favouriteButtonTapped:
+                state.isFavourite.toggle()
                 return .run { [movie = state.movie] send in
                     await send(.delegate(.addOrRemoveFavourites(movie)))
                 }
+            case .evaluateIsFavourite:
+                state.isFavourite = state.favourites.isFavourite(state.movie)
+                return .none
             }
         }
     }

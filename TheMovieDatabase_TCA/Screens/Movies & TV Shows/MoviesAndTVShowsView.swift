@@ -12,7 +12,7 @@ struct MoviesAndTVShowsView: View {
     @Bindable var viewStore: StoreOf<MoviesAndTVShowsViewReducer>
     var body: some View {
         NavigationStack(path: $viewStore.scope(state: \.path, action: \.path)){
-            MovieCollectionView(movies: viewStore.movies)
+            MovieCollectionView(movies: viewStore.movies, favourites: viewStore.favourites)
                 .task(id: viewStore.currentSortOrder){
                     viewStore.send(.fetchData)
                 }

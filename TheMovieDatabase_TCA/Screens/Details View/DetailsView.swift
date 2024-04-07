@@ -23,13 +23,15 @@ struct DetailsView: View {
             }
         }
         .task {
+            viewStore.send(.evaluateIsFavourite)
             viewStore.send(.fetchCastAndReviewDetails)
         }
         .toolbar {
             Button(action: {
                 viewStore.send(.favouriteButtonTapped)
             }, label: {
-                Image(systemName: "heart")
+                Image(systemName: viewStore.isFavourite ? "heart.fill": "heart")
+                    .foregroundStyle(viewStore.isFavourite ? .red : .black )
             })
         }
         .navigationBarTitleDisplayMode(.inline)
