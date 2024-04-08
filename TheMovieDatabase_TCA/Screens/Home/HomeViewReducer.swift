@@ -37,19 +37,23 @@ struct HomeViewReducer {
             switch action {
             case .fetchData:
                 return .run { send in
-                    let data: [Section : [Movie]] =  try await withThrowingTaskGroup(of: (Section, [Movie]).self) { group in
-                        for item in Section.allCases{
-                            group.addTask {
-                                return try await (item, apiClient.fetchMovies(item.urlString))
+                    do{
+                        let data: [Section : [Movie]] =  try await withThrowingTaskGroup(of: (Section, [Movie]).self) { group in
+                            for item in Section.allCases{
+                                group.addTask {
+                                    return try await (item, apiClient.fetchMovies(item.urlString))
+                                }
                             }
+                            var result = [Section: [Movie]]()
+                            for try await item in group{
+                                result[item.0] = item.1
+                            }
+                            return result
                         }
-                        var result = [Section: [Movie]]()
-                        for try await item in group{
-                            result[item.0] = item.1
-                        }
-                        return result
+                        await send(.dataFetched(data))
+                    }catch{
+                        print(error.localizedDescription)
                     }
-                    await send(.dataFetched(data))
                 }
             case let .dataFetched(data):
                 var section: [SectionData] = []
@@ -68,8 +72,12 @@ struct HomeViewReducer {
             case .searchQueryChangeDebounced:
                 guard !state.searchQuery.isEmpty else { return .none }
                 return .run { [query = state.searchQuery] send in
-                    let result = try await apiClient.searchMovies(query)
-                    await send(.searchResultFetched(result))
+                    do{
+                        let result = try await apiClient.searchMovies(query)
+                        await send(.searchResultFetched(result))
+                    }catch{
+                        print(error.localizedDescription)
+                    }
                 }
                 .cancellable(id: CancelID.search)
             case let .searchResultFetched(movies):

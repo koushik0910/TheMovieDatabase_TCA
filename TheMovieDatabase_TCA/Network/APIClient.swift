@@ -18,47 +18,25 @@ struct APIClient {
 extension APIClient: DependencyKey {
   static let liveValue = Self (
     fetchMovies: { urlString in
-        do{
-            let response: ResponseData = try await NetworkUtility.shared.request(urlString: urlString)
-            return response.results
-        }catch{
-            print(error.localizedDescription)
-            return []
-        }
-        
+        let response: ResponseData = try await NetworkUtility.shared.request(urlString: urlString)
+        return response.results
     },
     searchMovies: { query in
         let encodedQuery = query.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
         let urlString = "https://api.themoviedb.org/3/search/movie?api_key=909594533c98883408adef5d56143539&query=\(query)"
-        do{
-            print(urlString)
-            let (data, _) = try await URLSession.shared.data(from: URL(string: urlString)!)
-            let response = try JSONDecoder().decode(ResponseData.self, from: data)
-            return response.results
-        }catch (let error) {
-            print(error.localizedDescription)
-            return []
-        }
+        let (data, _) = try await URLSession.shared.data(from: URL(string: urlString)!)
+        let response = try JSONDecoder().decode(ResponseData.self, from: data)
+        return response.results
     },
     fetchCastDetails: { movieId in
         let urlString = "https://api.themoviedb.org/3/movie/\(movieId)/credits?api_key=909594533c98883408adef5d56143539"
-        do{
-            let response: CastResponse = try await NetworkUtility.shared.request(urlString: urlString)
-            return response.cast
-        }catch{
-            print(error.localizedDescription)
-            return nil
-        }
+        let response: CastResponse = try await NetworkUtility.shared.request(urlString: urlString)
+        return response.cast
     },
     fetchReviews: { movieId in
         let urlString = "https://api.themoviedb.org/3/movie/\(movieId)/reviews?api_key=909594533c98883408adef5d56143539"
-        do{
-            let response: ReviewResponse = try await NetworkUtility.shared.request(urlString: urlString)
-            return response.results
-        }catch{
-            print(error.localizedDescription)
-            return nil
-        }
+        let response: ReviewResponse = try await NetworkUtility.shared.request(urlString: urlString)
+        return response.results
     }
   )
 }

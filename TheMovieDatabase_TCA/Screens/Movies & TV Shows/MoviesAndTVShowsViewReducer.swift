@@ -35,8 +35,13 @@ struct MoviesAndTVShowsViewReducer {
             case .fetchData:
                 let urlString = state.currentSortOrder.getURLString(isMovie: state.isMovie)
                 return .run { send in
-                    let movies = try await apiClient.fetchMovies(urlString)
-                    await send(.dataFetched(movies))
+                    do{
+                        let movies = try await apiClient.fetchMovies(urlString)
+                        await send(.dataFetched(movies))
+                    } catch {
+                        print(error.localizedDescription)
+                    }
+                    
                 }
             case let .dataFetched(movies):
                 state.movies = movies
