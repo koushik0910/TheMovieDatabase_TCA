@@ -24,8 +24,7 @@ extension APIClient: DependencyKey {
     searchMovies: { query in
         let encodedQuery = query.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
         let urlString = "https://api.themoviedb.org/3/search/movie?api_key=909594533c98883408adef5d56143539&query=\(query)"
-        let (data, _) = try await URLSession.shared.data(from: URL(string: urlString)!)
-        let response = try JSONDecoder().decode(ResponseData.self, from: data)
+        let response: ResponseData = try await NetworkUtility.shared.request(urlString: urlString)
         return response.results
     },
     fetchCastDetails: { movieId in
