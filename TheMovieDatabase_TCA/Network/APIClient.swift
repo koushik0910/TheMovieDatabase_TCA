@@ -29,14 +29,25 @@ extension APIClient: DependencyKey {
         return response.results
     },
     fetchCastDetails: { movieId in
-        let urlString = "https://api.themoviedb.org/3/movie/\(movieId)/credits?api_key=909594533c98883408adef5d56143539"
-        let response: CastResponse = try await NetworkUtility.shared.request(urlString: urlString)
-        return response.cast
+        do{
+            let urlString = "https://api.themoviedb.org/3/movie/\(movieId)/credits?api_key=909594533c98883408adef5d56143539"
+            let response: CastResponse = try await NetworkUtility.shared.request(urlString: urlString)
+            return response.cast
+        }catch{
+            print(error.localizedDescription)
+            return nil
+        }
     },
     fetchReviews: { movieId in
-        let urlString = "https://api.themoviedb.org/3/movie/\(movieId)/reviews?api_key=909594533c98883408adef5d56143539"
-        let response: ReviewResponse = try await NetworkUtility.shared.request(urlString: urlString)
-        return response.results
+        do{
+            let urlString = "https://api.themoviedb.org/3/movie/\(movieId)/reviews?api_key=909594533c98883408adef5d56143539"
+            let response: ReviewResponse = try await NetworkUtility.shared.request(urlString: urlString)
+            return response.results
+        }catch{
+            print(error.localizedDescription)
+            return nil
+        }
+        
     }
   )
 }

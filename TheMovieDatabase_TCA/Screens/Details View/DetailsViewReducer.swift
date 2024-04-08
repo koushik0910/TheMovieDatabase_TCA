@@ -40,11 +40,7 @@ struct DetailsViewReducer {
                 return .run { [movieId = state.movie.id] send in
                     async let castDetails = apiClient.fetchCastDetails(movieId)
                     async let reviews = apiClient.fetchReviews(movieId)
-                    do{
-                        await send(.castAndReviewDetailsFetched(try castDetails, try reviews))
-                    }catch{
-                        print(error.localizedDescription)
-                    }
+                    await send(.castAndReviewDetailsFetched(try castDetails, try reviews))
                 }
             case let .castAndReviewDetailsFetched(cast, reviews):
                 state.cast = cast
