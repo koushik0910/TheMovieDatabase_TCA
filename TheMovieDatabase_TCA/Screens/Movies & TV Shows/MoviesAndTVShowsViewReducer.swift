@@ -41,7 +41,6 @@ struct MoviesAndTVShowsViewReducer {
                     } catch {
                         print(error.localizedDescription)
                     }
-                    
                 }
             case let .dataFetched(movies):
                 state.movies = movies

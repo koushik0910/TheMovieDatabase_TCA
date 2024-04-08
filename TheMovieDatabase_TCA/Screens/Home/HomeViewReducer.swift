@@ -37,23 +37,24 @@ struct HomeViewReducer {
             switch action {
             case .fetchData:
                 return .run { send in
-                    do{
-                        let data: [Section : [Movie]] =  try await withThrowingTaskGroup(of: (Section, [Movie]).self) { group in
-                            for item in Section.allCases{
-                                group.addTask {
+                    let data: [Section : [Movie]] =  await withTaskGroup(of: (Section, [Movie])?.self) { group in
+                        for item in Section.allCases{
+                            group.addTask {
+                                do {
                                     return try await (item, apiClient.fetchMovies(item.urlString))
+                                } catch {
+                                    print(error.localizedDescription)
+                                    return nil
                                 }
                             }
-                            var result = [Section: [Movie]]()
-                            for try await item in group{
-                                result[item.0] = item.1
-                            }
-                            return result
                         }
-                        await send(.dataFetched(data))
-                    }catch{
-                        print(error.localizedDescription)
+                        var result = [Section: [Movie]]()
+                        for await item in group.compactMap({ $0 }) {
+                            result[item.0] = item.1
+                        }
+                        return result
                     }
+                    await send(.dataFetched(data))
                 }
             case let .dataFetched(data):
                 var section: [SectionData] = []
