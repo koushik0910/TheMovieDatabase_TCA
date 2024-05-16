@@ -16,16 +16,15 @@ struct DetailsViewReducer {
         let movie: Movie
         var cast: [Cast]?
         var reviews: [Review]?
-        var favourites = Favourites()
-        var isFavourite = false
+        var isFavourite: Bool
     }
     
     enum Action {
         case fetchCastAndReviewDetails
-        case castAndReviewDetailsFetched([Cast]?, [Review]?)
+        case castDetailsFetched([Cast]?)
+        case reviewsFetched([Review]?)
         case delegate(Delegate)
         case favouriteButtonTapped
-        case evaluateIsFavourite
         enum Delegate: Equatable {
             case addOrRemoveFavourites(Movie)
         }
@@ -37,13 +36,20 @@ struct DetailsViewReducer {
         Reduce { state, action in
             switch action {
             case .fetchCastAndReviewDetails:
-                return .run { [movieId = state.movie.id] send in
-                    async let castDetails = apiClient.fetchCastDetails(movieId)
-                    async let reviews = apiClient.fetchReviews(movieId)
-                    await send(.castAndReviewDetailsFetched(try castDetails, try reviews))
-                }
-            case let .castAndReviewDetailsFetched(cast, reviews):
+                return .merge(
+                    .run { [movieId = state.movie.id] send in
+                        let castDetails = await apiClient.fetchCastDetails(movieId)
+                        await send(.castDetailsFetched(castDetails))
+                    }
+                    , .run { [movieId = state.movie.id] send in
+                        let reviews = await apiClient.fetchReviews(movieId)
+                        await send(.reviewsFetched(reviews))
+                    }
+                )
+            case let .castDetailsFetched(cast):
                 state.cast = cast
+                return .none
+            case let .reviewsFetched(reviews):
                 state.reviews = reviews
                 return .none
             case .delegate(_):
@@ -53,9 +59,6 @@ struct DetailsViewReducer {
                 return .run { [movie = state.movie] send in
                     await send(.delegate(.addOrRemoveFavourites(movie)))
                 }
-            case .evaluateIsFavourite:
-                state.isFavourite = state.favourites.isFavourite(state.movie)
-                return .none
             }
         }
     }

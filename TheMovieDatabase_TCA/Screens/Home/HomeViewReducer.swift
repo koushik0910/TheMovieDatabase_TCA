@@ -10,14 +10,14 @@ import Foundation
 
 @Reducer
 struct HomeViewReducer {
-    
+
     @ObservableState
     struct State: Equatable {
         var sections : [SectionData] = []
         var searchQuery = ""
         var searchedResults: [Movie] = []
         var path = StackState<DetailsViewReducer.State>()
-        var favourites = Favourites()
+        @Shared var userFavourites : Favourites
     }
     
     enum Action {
@@ -85,7 +85,7 @@ struct HomeViewReducer {
                 state.searchedResults = movies
                 return .none
             case .path(.element(id: _, action: .delegate(.addOrRemoveFavourites(let movie)))):
-                state.favourites.addOrRemoveMovies(movie)
+                state.userFavourites.addOrRemoveMovies(movie)
                 return .none
             case .path(_):
                 return .none

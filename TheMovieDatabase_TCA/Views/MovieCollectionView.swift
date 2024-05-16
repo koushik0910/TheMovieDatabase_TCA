@@ -15,7 +15,7 @@ struct MovieCollectionView: View {
         ScrollView{
             LazyVGrid(columns: columns, spacing: 10) {
                 ForEach(movies, id: \.id) { movie in
-                    NavigationLink(state: DetailsViewReducer.State(movie: movie, favourites: favourites)) {
+                    NavigationLink(state: DetailsViewReducer.State(movie: movie, isFavourite: favourites.isFavourite(movie))) {
                         MovieCell(title: movie.titleText, imageURLString: movie.posterFullPath, releaseDate: movie.dateText)
                     }
                 }

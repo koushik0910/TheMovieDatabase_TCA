@@ -10,14 +10,14 @@ import Foundation
 
 @Reducer
 struct MoviesAndTVShowsViewReducer {
-    
+
     @ObservableState
     struct State: Equatable {
         var currentSortOrder: SortOrder = .nowPlaying
         var movies: [Movie] = []
-        let isMovie: Bool
+        let movieType: MovieType
         var path = StackState<DetailsViewReducer.State>()
-        var favourites = Favourites()
+        @Shared var userFavourites : Favourites
     }
     
     enum Action {
@@ -33,7 +33,7 @@ struct MoviesAndTVShowsViewReducer {
         Reduce { state, action in
             switch action {
             case .fetchData:
-                let urlString = state.currentSortOrder.getURLString(isMovie: state.isMovie)
+                let urlString = state.currentSortOrder.getURLString(movieType: state.movieType)
                 return .run { send in
                     do{
                         let movies = try await apiClient.fetchMovies(urlString)
@@ -50,7 +50,7 @@ struct MoviesAndTVShowsViewReducer {
                 state.currentSortOrder = order
                 return .none
             case .path(.element(id: _, action: .delegate(.addOrRemoveFavourites(let movie)))):
-                state.favourites.addOrRemoveMovies(movie)
+                state.userFavourites.addOrRemoveMovies(movie)
                 return .none
             case .path(_):
                 return .none

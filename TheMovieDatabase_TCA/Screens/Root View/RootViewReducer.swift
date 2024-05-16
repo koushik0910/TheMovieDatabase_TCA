@@ -16,11 +16,21 @@ struct RootViewReducer {
     
     @ObservableState
     struct State: Equatable {
-        var currentTab = Tab.home
-        var home = HomeViewReducer.State()
-        var movies = MoviesAndTVShowsViewReducer.State(isMovie: true)
-        var tvShows = MoviesAndTVShowsViewReducer.State(isMovie: false)
-        var favourites = FavouritesViewReducer.State()
+        var currentTab: Tab
+        var home: HomeViewReducer.State
+        var movies: MoviesAndTVShowsViewReducer.State
+        var tvShows: MoviesAndTVShowsViewReducer.State
+        var favourites: FavouritesViewReducer.State
+        @Shared var userFavourites: Favourites
+        
+        init(currentTab: Tab = Tab.home, userFavourites: Shared<Favourites> = Shared(Favourites())) {
+            self.currentTab = currentTab
+            self.home = HomeViewReducer.State(userFavourites: userFavourites)
+            self.movies = MoviesAndTVShowsViewReducer.State(movieType: .movie, userFavourites: userFavourites)
+            self.tvShows = MoviesAndTVShowsViewReducer.State(movieType: .tvShow, userFavourites: userFavourites)
+            self.favourites = FavouritesViewReducer.State(userFavourites: userFavourites)
+            self._userFavourites = userFavourites
+        }
     }
     
     enum Action {
@@ -35,49 +45,17 @@ struct RootViewReducer {
         Scope(state: \.home, action: \.home) {
             HomeViewReducer()
         }
-        .onChange(of: \.home.favourites) { _, favourites in
-            Reduce { state, _ in
-                state.favourites.favourites = favourites
-                state.movies.favourites = favourites
-                state.tvShows.favourites = favourites
-                return .none
-            }
-        }
         
         Scope(state: \.movies, action: \.movies) {
             MoviesAndTVShowsViewReducer()
-        }
-        .onChange(of: \.movies.favourites) { _, favourites in
-            Reduce { state, _ in
-                state.favourites.favourites = favourites
-                state.home.favourites = favourites
-                state.tvShows.favourites = favourites
-                return .none
-            }
         }
         
         Scope(state: \.tvShows, action: \.tvShows) {
             MoviesAndTVShowsViewReducer()
         }
-        .onChange(of: \.tvShows.favourites) { _, favourites in
-            Reduce { state, _ in
-                state.favourites.favourites = favourites
-                state.movies.favourites = favourites
-                state.home.favourites = favourites
-                return .none
-            }
-        }
         
         Scope(state: \.favourites, action: \.favourites) {
             FavouritesViewReducer()
-        }
-        .onChange(of: \.favourites.favourites) { _, favourites in
-            Reduce { state, _ in
-                state.home.favourites = favourites
-                state.movies.favourites = favourites
-                state.tvShows.favourites = favourites
-                return .none
-            }
         }
         
         Reduce { state, action in

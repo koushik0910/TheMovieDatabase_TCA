@@ -189,8 +189,8 @@
 		705F9D922BBFB946004B1EA0 /* Details View */ = {
 			isa = PBXGroup;
 			children = (
-				705F9D932BBFB99E004B1EA0 /* DetailsViewReducer.swift */,
 				705F9D952BBFB9BE004B1EA0 /* DetailsView.swift */,
+				705F9D932BBFB99E004B1EA0 /* DetailsViewReducer.swift */,
 			);
 			path = "Details View";
 			sourceTree = "<group>";
@@ -198,8 +198,8 @@
 		705F9DC02BC00595004B1EA0 /* Favourites */ = {
 			isa = PBXGroup;
 			children = (
-				705F9DC32BC007C4004B1EA0 /* FavouritesViewReducer.swift */,
 				705F9DC52BC007E4004B1EA0 /* FavouritesView.swift */,
+				705F9DC32BC007C4004B1EA0 /* FavouritesViewReducer.swift */,
 			);
 			path = Favourites;
 			sourceTree = "<group>";

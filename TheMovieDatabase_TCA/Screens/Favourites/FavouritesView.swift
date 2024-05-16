@@ -13,7 +13,7 @@ struct FavouritesView: View {
     
     var body: some View {
         NavigationStack(path: $viewStore.scope(state: \.path, action: \.path)){
-            MovieCollectionView(movies: Array(viewStore.favourites.movies), favourites: viewStore.favourites)
+            MovieCollectionView(movies: Array(viewStore.userFavourites.movies), favourites: viewStore.userFavourites)
                 .navigationTitle("Favourites")
         }destination: { store in
             DetailsView(viewStore: store)
@@ -22,7 +22,7 @@ struct FavouritesView: View {
 }
 
 #Preview {
-    FavouritesView(viewStore: Store(initialState: FavouritesViewReducer.State(), reducer: {
+    FavouritesView(viewStore: Store(initialState: FavouritesViewReducer.State(userFavourites: Shared(Favourites())), reducer: {
         FavouritesViewReducer()
     }))
 }

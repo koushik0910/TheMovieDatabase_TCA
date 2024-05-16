@@ -11,11 +11,9 @@ struct Favourites: Equatable {
     private(set) var movies = Set<Movie>()
     
     mutating func addOrRemoveMovies(_ movie: Movie) {
-        if movies.contains(movie){
+        if !movies.insert(movie).inserted {
             movies.remove(movie)
-            return
         }
-        movies.insert(movie)
     }
     
     func isFavourite(_ movie: Movie) -> Bool{

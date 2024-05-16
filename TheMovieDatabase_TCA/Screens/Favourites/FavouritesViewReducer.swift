@@ -10,11 +10,11 @@ import Foundation
 
 @Reducer
 struct FavouritesViewReducer {
-    
+
     @ObservableState
     struct State: Equatable {
         var path = StackState<DetailsViewReducer.State>()
-        var favourites = Favourites()
+        @Shared var userFavourites : Favourites
     }
     
     enum Action {
@@ -25,7 +25,7 @@ struct FavouritesViewReducer {
         Reduce { state, action in
             switch action {
             case .path(.element(id: _, action: .delegate(.addOrRemoveFavourites(let movie)))):
-                state.favourites.addOrRemoveMovies(movie)
+                state.userFavourites.addOrRemoveMovies(movie)
                 return .none
             case .path(_):
                 return .none

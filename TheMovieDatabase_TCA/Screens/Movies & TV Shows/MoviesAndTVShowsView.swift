@@ -12,7 +12,7 @@ struct MoviesAndTVShowsView: View {
     @Bindable var viewStore: StoreOf<MoviesAndTVShowsViewReducer>
     var body: some View {
         NavigationStack(path: $viewStore.scope(state: \.path, action: \.path)){
-            MovieCollectionView(movies: viewStore.movies, favourites: viewStore.favourites)
+            MovieCollectionView(movies: viewStore.movies, favourites: viewStore.userFavourites)
                 .task(id: viewStore.currentSortOrder){
                     viewStore.send(.fetchData)
                 }
@@ -29,7 +29,7 @@ struct MoviesAndTVShowsView: View {
 }
 
 #Preview {
-    MoviesAndTVShowsView(viewStore: Store(initialState: MoviesAndTVShowsViewReducer.State(isMovie: true), reducer: {
+    MoviesAndTVShowsView(viewStore: Store(initialState: MoviesAndTVShowsViewReducer.State(movieType: .movie, userFavourites: Shared(Favourites())), reducer: {
         MoviesAndTVShowsViewReducer()
     }))
 }

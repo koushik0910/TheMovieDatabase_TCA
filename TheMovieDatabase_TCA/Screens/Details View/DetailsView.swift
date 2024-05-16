@@ -23,7 +23,6 @@ struct DetailsView: View {
             }
         }
         .task {
-            viewStore.send(.evaluateIsFavourite)
             viewStore.send(.fetchCastAndReviewDetails)
         }
         .toolbar {
@@ -39,7 +38,7 @@ struct DetailsView: View {
 }
 
 #Preview {
-    DetailsView(viewStore: Store(initialState: DetailsViewReducer.State(movie: Movie.mockData()), reducer: {
+    DetailsView(viewStore: Store(initialState: DetailsViewReducer.State(movie: Movie.mockData(), isFavourite: true), reducer: {
         DetailsViewReducer()
     }))
 }

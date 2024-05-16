@@ -15,7 +15,7 @@ enum NetworkError: Error {
 }
 
 class NetworkUtility{
-    static var shared = NetworkUtility()
+    static let shared = NetworkUtility()
     private init() { }
     
     func request<T: Decodable>(urlString: String) async throws -> T {
