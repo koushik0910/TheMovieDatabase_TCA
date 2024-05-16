@@ -41,7 +41,7 @@ struct HomeViewReducer {
                         for item in Section.allCases{
                             group.addTask {
                                 do {
-                                    return try await (item, apiClient.fetchMovies(item.urlString))
+                                    return try await (item, apiClient.fetchMovies(item.path))
                                 } catch {
                                     print(error.localizedDescription)
                                     return nil

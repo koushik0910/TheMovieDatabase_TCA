@@ -33,10 +33,10 @@ struct MoviesAndTVShowsViewReducer {
         Reduce { state, action in
             switch action {
             case .fetchData:
-                let urlString = state.currentSortOrder.getURLString(movieType: state.movieType)
+                let urlPath = state.currentSortOrder.getURLPath(movieType: state.movieType)
                 return .run { send in
                     do{
-                        let movies = try await apiClient.fetchMovies(urlString)
+                        let movies = try await apiClient.fetchMovies(urlPath)
                         await send(.dataFetched(movies))
                     } catch {
                         print(error.localizedDescription)

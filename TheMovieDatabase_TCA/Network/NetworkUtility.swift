@@ -18,8 +18,8 @@ class NetworkUtility{
     static let shared = NetworkUtility()
     private init() { }
     
-    func request<T: Decodable>(urlString: String) async throws -> T {
-        guard let url = URL(string: urlString) else { throw NetworkError.invalidURL }
+    func request<T: Decodable>(url: URL?) async throws -> T {
+        guard let url else { throw NetworkError.invalidURL }
         let urlRequest = URLRequest(url: url)
         do {
             let (data, response) = try await URLSession.shared.data(for: urlRequest)

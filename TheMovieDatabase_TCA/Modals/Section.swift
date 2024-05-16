@@ -12,14 +12,14 @@ enum Section:String, CaseIterable {
     case popular = "What's Popular"
     case tvShows = "TV Shows"
 
-    var urlString: String {
+    var path: String {
         switch self {
         case .trending:
-            return "https://api.themoviedb.org/3/trending/movie/day?api_key=909594533c98883408adef5d56143539"
+            return "/3/trending/movie/day"
         case .popular:
-            return "https://api.themoviedb.org/3/movie/popular?api_key=909594533c98883408adef5d56143539"
+            return "/3/movie/popular"
         case .tvShows:
-            return "https://api.themoviedb.org/3/tv/popular?api_key=909594533c98883408adef5d56143539"
+            return "/3/tv/popular"
         }
     }
 }
