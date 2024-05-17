@@ -37,7 +37,7 @@
 		705F9DC92BC19562004B1EA0 /* Review.swift in Sources */ = {isa = PBXBuildFile; fileRef = 705F9DC82BC19562004B1EA0 /* Review.swift */; };
 		705F9DCB2BC198F5004B1EA0 /* ReviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 705F9DCA2BC198F5004B1EA0 /* ReviewView.swift */; };
 		70C8DC832BF62A250046E066 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70C8DC822BF62A250046E066 /* Constants.swift */; };
-		70C8DC852BF62E940046E066 /* APIResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70C8DC842BF62E940046E066 /* APIResource.swift */; };
+		70C8DC852BF62E940046E066 /* Endpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70C8DC842BF62E940046E066 /* Endpoint.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -71,7 +71,7 @@
 		705F9DC82BC19562004B1EA0 /* Review.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Review.swift; sourceTree = "<group>"; };
 		705F9DCA2BC198F5004B1EA0 /* ReviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewView.swift; sourceTree = "<group>"; };
 		70C8DC822BF62A250046E066 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
-		70C8DC842BF62E940046E066 /* APIResource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIResource.swift; sourceTree = "<group>"; };
+		70C8DC842BF62E940046E066 /* Endpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Endpoint.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -169,7 +169,7 @@
 				70C8DC822BF62A250046E066 /* Constants.swift */,
 				705F9D6F2BBEE0B9004B1EA0 /* NetworkUtility.swift */,
 				705F9D782BBEE322004B1EA0 /* APIClient.swift */,
-				70C8DC842BF62E940046E066 /* APIResource.swift */,
+				70C8DC842BF62E940046E066 /* Endpoint.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -307,7 +307,7 @@
 				705F9D792BBEE322004B1EA0 /* APIClient.swift in Sources */,
 				705F9DC92BC19562004B1EA0 /* Review.swift in Sources */,
 				705F9DC62BC007E4004B1EA0 /* FavouritesView.swift in Sources */,
-				70C8DC852BF62E940046E066 /* APIResource.swift in Sources */,
+				70C8DC852BF62E940046E066 /* Endpoint.swift in Sources */,
 				705F9D7B2BBEE36D004B1EA0 /* MovieCell.swift in Sources */,
 				705F9D5D2BBED48B004B1EA0 /* RootView.swift in Sources */,
 				705F9DC42BC007C4004B1EA0 /* FavouritesViewReducer.swift in Sources */,

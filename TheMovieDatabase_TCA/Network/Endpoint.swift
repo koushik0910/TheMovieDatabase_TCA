@@ -9,13 +9,7 @@ import Foundation
 
 struct EndPoint {
     var urlPath: String
-    var params: [String: String]?
-}
-
-extension EndPoint {
-    static func createURL(urlPath: String, params : [String: String]?) -> EndPoint {
-       return EndPoint(urlPath: urlPath, params: params)
-    }
+    var params: [String: String]
 }
 
 extension EndPoint {
@@ -24,7 +18,7 @@ extension EndPoint {
         urlComponent.scheme = "https"
         urlComponent.host = "api.themoviedb.org"
         urlComponent.path = urlPath
-        urlComponent.queryItems = params?.compactMap {
+        urlComponent.queryItems = params.map {
            URLQueryItem(name: $0.0, value: $0.1 )
         }
         return urlComponent.url
