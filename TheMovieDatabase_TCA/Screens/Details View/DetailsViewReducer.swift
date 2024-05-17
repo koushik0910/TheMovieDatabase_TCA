@@ -16,18 +16,14 @@ struct DetailsViewReducer {
         let movie: Movie
         var cast: [Cast]?
         var reviews: [Review]?
-        var isFavourite: Bool
+        @Shared var userFavourites: Favourites
     }
     
     enum Action {
         case fetchCastAndReviewDetails
         case castDetailsFetched([Cast]?)
         case reviewsFetched([Review]?)
-        case delegate(Delegate)
         case favouriteButtonTapped
-        enum Delegate: Equatable {
-            case addOrRemoveFavourites(Movie)
-        }
     }
     
     @Dependency(\.apiClient) var apiClient
@@ -52,13 +48,9 @@ struct DetailsViewReducer {
             case let .reviewsFetched(reviews):
                 state.reviews = reviews
                 return .none
-            case .delegate(_):
-                return .none
             case .favouriteButtonTapped:
-                state.isFavourite.toggle()
-                return .run { [movie = state.movie] send in
-                    await send(.delegate(.addOrRemoveFavourites(movie)))
-                }
+                state.userFavourites.addOrRemoveMovies(state.movie)
+                return .none
             }
         }
     }

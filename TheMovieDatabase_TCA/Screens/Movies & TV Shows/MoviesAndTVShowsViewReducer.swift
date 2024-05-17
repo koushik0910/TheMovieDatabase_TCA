@@ -49,9 +49,6 @@ struct MoviesAndTVShowsViewReducer {
                 guard state.currentSortOrder != order else { return .none }
                 state.currentSortOrder = order
                 return .none
-            case .path(.element(id: _, action: .delegate(.addOrRemoveFavourites(let movie)))):
-                state.userFavourites.addOrRemoveMovies(movie)
-                return .none
             case .path(_):
                 return .none
             }

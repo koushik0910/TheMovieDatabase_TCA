@@ -84,9 +84,6 @@ struct HomeViewReducer {
             case let .searchResultFetched(movies):
                 state.searchedResults = movies
                 return .none
-            case .path(.element(id: _, action: .delegate(.addOrRemoveFavourites(let movie)))):
-                state.userFavourites.addOrRemoveMovies(movie)
-                return .none
             case .path(_):
                 return .none
             }

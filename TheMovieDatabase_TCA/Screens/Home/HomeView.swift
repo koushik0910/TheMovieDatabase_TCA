@@ -16,10 +16,10 @@ struct HomeView: View {
             ScrollView{
                 if viewStore.searchQuery.isEmpty {
                     ForEach(viewStore.sections){ section in
-                        HorizontalMovieView(headerTitle: section.title, movies: section.data, favourites: viewStore.userFavourites)
+                        HorizontalMovieView(headerTitle: section.title, movies: section.data, favourites: viewStore.$userFavourites)
                     }
                 }else{
-                    VerticalSearchView(movies: viewStore.searchedResults, favourites: viewStore.userFavourites)
+                    VerticalSearchView(movies: viewStore.searchedResults, favourites: viewStore.$userFavourites)
                 }
             }
             .navigationTitle("TMDB")
@@ -46,7 +46,7 @@ struct HomeView: View {
 struct HorizontalMovieView: View {
     let headerTitle: String
     let movies: [Movie]
-    let favourites: Favourites
+    let favourites: Shared<Favourites>
     
     var body: some View {
         VStack(alignment:.leading){
@@ -57,7 +57,7 @@ struct HorizontalMovieView: View {
             ScrollView(.horizontal) {
                 LazyHStack(spacing: 15) {
                     ForEach(movies) { movie in
-                        NavigationLink(state: DetailsViewReducer.State(movie: movie, isFavourite: favourites.isFavourite(movie))) {
+                        NavigationLink(state: DetailsViewReducer.State(movie: movie, userFavourites: favourites)) {
                             MovieCell(title: movie.titleText, imageURLString: movie.posterFullPath, releaseDate: movie.dateText)
                         }
                     }
@@ -71,12 +71,12 @@ struct HorizontalMovieView: View {
 
 struct VerticalSearchView: View {
     let movies: [Movie]
-    let favourites: Favourites
+    let favourites: Shared<Favourites>
     var body: some View {
         ScrollView{
             LazyVStack{
                 ForEach(movies) { movie in
-                    NavigationLink(state: DetailsViewReducer.State(movie: movie, isFavourite: favourites.isFavourite(movie))) {
+                    NavigationLink(state: DetailsViewReducer.State(movie: movie, userFavourites: favourites)) {
                         SearchResultCell(title: movie.titleText, imageURLString: movie.posterFullPath, overview: movie.overview)
                     }
                 }

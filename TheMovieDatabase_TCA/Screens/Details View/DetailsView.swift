@@ -29,8 +29,8 @@ struct DetailsView: View {
             Button(action: {
                 viewStore.send(.favouriteButtonTapped)
             }, label: {
-                Image(systemName: viewStore.isFavourite ? "heart.fill": "heart")
-                    .foregroundStyle(viewStore.isFavourite ? .red : .black )
+                Image(systemName: viewStore.userFavourites.isFavourite(viewStore.movie) ? "heart.fill": "heart")
+                    .foregroundStyle(viewStore.userFavourites.isFavourite(viewStore.movie) ? .red : .black )
             })
         }
         .navigationBarTitleDisplayMode(.inline)
@@ -38,7 +38,7 @@ struct DetailsView: View {
 }
 
 #Preview {
-    DetailsView(viewStore: Store(initialState: DetailsViewReducer.State(movie: Movie.mockData(), isFavourite: true), reducer: {
+    DetailsView(viewStore: Store(initialState: DetailsViewReducer.State(movie: Movie.mockData(), userFavourites: Shared(Favourites())), reducer: {
         DetailsViewReducer()
     }))
 }
