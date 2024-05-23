@@ -16,10 +16,10 @@ struct HomeView: View {
             ScrollView{
                 if viewStore.searchQuery.isEmpty {
                     ForEach(viewStore.sections){ section in
-                        HorizontalMovieView(headerTitle: section.title, movies: section.data, favourites: viewStore.$userFavourites)
+                        HorizontalMediaView(section: section)
                     }
                 }else{
-                    VerticalSearchView(movies: viewStore.searchedResults, favourites: viewStore.$userFavourites)
+                    VerticalSearchView(mediaArray: viewStore.searchedResults)
                 }
             }
             .navigationTitle("TMDB")
@@ -40,26 +40,28 @@ struct HomeView: View {
 }
 
 #Preview {
-    HomeView(viewStore: Store(initialState: HomeViewReducer.State(userFavourites: Shared(Favourites())), reducer: { HomeViewReducer() }))
+    HomeView(viewStore: Store(initialState: HomeViewReducer.State(), reducer: { HomeViewReducer() }))
 }
 
-struct HorizontalMovieView: View {
-    let headerTitle: String
-    let movies: [Movie]
-    let favourites: Shared<Favourites>
+struct HorizontalMediaView: View {
+    let section: HomeSectionData
     
     var body: some View {
         VStack(alignment:.leading){
-            Text(headerTitle)
+            Text(section.title)
                 .bold()
                 .font(.title2)
                 .padding()
             ScrollView(.horizontal) {
-                LazyHStack(spacing: 15) {
-                    ForEach(movies) { movie in
-                        NavigationLink(state: DetailsViewReducer.State(movie: movie, userFavourites: favourites)) {
-                            MovieCell(title: movie.titleText, imageURLString: movie.posterFullPath, releaseDate: movie.dateText)
+                LazyHStack(spacing: 16) {
+                    if let mediaArray = section.data {
+                        ForEach(mediaArray) { media in
+                            NavigationLink(state: DetailsViewReducer.State(media: media)) {
+                                MediaCell(title: media.titleText, imageURL: media.posterFullPath, releaseDate: media.dateText)
+                            }
                         }
+                    }else{
+                        ErrorCell()
                     }
                 }
                 .padding(.horizontal)
@@ -70,17 +72,35 @@ struct HorizontalMovieView: View {
 }
 
 struct VerticalSearchView: View {
-    let movies: [Movie]
-    let favourites: Shared<Favourites>
+    let mediaArray: IdentifiedArrayOf<Media>
     var body: some View {
         ScrollView{
             LazyVStack{
-                ForEach(movies) { movie in
-                    NavigationLink(state: DetailsViewReducer.State(movie: movie, userFavourites: favourites)) {
-                        SearchResultCell(title: movie.titleText, imageURLString: movie.posterFullPath, overview: movie.overview)
+                ForEach(mediaArray) { media in
+                    NavigationLink(state: DetailsViewReducer.State(media: media)) {
+                        SearchResultCell(title: media.titleText, imageURL: media.posterFullPath, overview: media.overview)
                     }
                 }
             }
         }
+    }
+}
+
+
+struct ErrorCell: View {
+    var body: some View {
+        VStack{
+            HStack(spacing: 20){
+                Image("error")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 100)
+                
+                Text("Opps! Something went wrong")
+                    .foregroundStyle(.gray)
+            }
+            
+        }
+        .frame(maxWidth: .infinity)
     }
 }

@@ -8,11 +8,11 @@
 import SwiftUI
 import ComposableArchitecture
 
-struct MoviesAndTVShowsView: View {
-    @Bindable var viewStore: StoreOf<MoviesAndTVShowsViewReducer>
+struct MediaView: View {
+    @Bindable var viewStore: StoreOf<MediaViewReducer>
     var body: some View {
         NavigationStack(path: $viewStore.scope(state: \.path, action: \.path)){
-            MovieCollectionView(movies: viewStore.movies, favourites: viewStore.$userFavourites)
+            MediaCollectionView(mediaArray: viewStore.mediaArray)
                 .task(id: viewStore.currentSortOrder){
                     viewStore.send(.fetchData)
                 }
@@ -29,19 +29,19 @@ struct MoviesAndTVShowsView: View {
 }
 
 #Preview {
-    MoviesAndTVShowsView(viewStore: Store(initialState: MoviesAndTVShowsViewReducer.State(movieType: .movie, userFavourites: Shared(Favourites())), reducer: {
-        MoviesAndTVShowsViewReducer()
+    MediaView(viewStore: Store(initialState: MediaViewReducer.State(mediaType: .movie), reducer: {
+        MediaViewReducer()
     }))
 }
 
 
 struct SortToolBarContent: ToolbarContent {
-    var action: (SortOrder) -> ()
+    var action: (MediaSortOrder) -> ()
     
     var body: some ToolbarContent {
         ToolbarItem(placement: .navigationBarTrailing) {
             Menu(content: {
-                ForEach(SortOrder.allCases, id: \.hashValue){ order in
+                ForEach(MediaSortOrder.allCases, id: \.hashValue){ order in
                     Button(order.rawValue){
                         action(order)
                     }

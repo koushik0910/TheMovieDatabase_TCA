@@ -40,13 +40,12 @@ struct AuthorDetails: Decodable, Equatable {
     let rating: Double?
     
     var ratingText: String {
-        guard let rating else { return "N/A"}
-        return rating.description
+        rating?.description ?? "NA"
     }
     
-    var fullAvatarPath: String? {
+    var fullAvatarPath: URL? {
         guard let avatarPath else { return nil }
-        return "https://image.tmdb.org/t/p/w500" + avatarPath
+        return URL(string: Routes.completeImageURLString(avatarPath).path)
     }
 
     enum CodingKeys: String, CodingKey {

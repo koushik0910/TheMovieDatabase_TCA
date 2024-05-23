@@ -19,9 +19,9 @@ struct Cast: Decodable, Equatable, Identifiable {
     let character: String?
     let profilePath: String?
     
-    var fullProfilePath: String? {
-        guard let profileImagePath = profilePath else { return nil }
-        return "https://image.tmdb.org/t/p/w500" + profileImagePath
+    var fullProfilePath: URL? {
+        guard let profilePath else { return nil }
+        return URL(string: Routes.completeImageURLString(profilePath).path)
     }
     
     enum CodingKeys: String, CodingKey {

@@ -9,21 +9,20 @@ import ComposableArchitecture
 import Foundation
 
 @Reducer
-struct MoviesAndTVShowsViewReducer {
+struct MediaViewReducer {
 
     @ObservableState
     struct State: Equatable {
-        var currentSortOrder: SortOrder = .nowPlaying
-        var movies: [Movie] = []
-        let movieType: MovieType
+        var currentSortOrder: MediaSortOrder = .nowPlaying
+        var mediaArray: IdentifiedArrayOf<Media> = []
+        let mediaType: MediaType
         var path = StackState<DetailsViewReducer.State>()
-        @Shared var userFavourites : Favourites
     }
     
     enum Action {
         case fetchData
-        case dataFetched([Movie])
-        case sortOrderChanged(SortOrder)
+        case dataFetched(IdentifiedArrayOf<Media>)
+        case sortOrderChanged(MediaSortOrder)
         case path(StackAction<DetailsViewReducer.State, DetailsViewReducer.Action>)
     }
     
@@ -33,23 +32,23 @@ struct MoviesAndTVShowsViewReducer {
         Reduce { state, action in
             switch action {
             case .fetchData:
-                let urlPath = state.currentSortOrder.getURLPath(movieType: state.movieType)
+                let urlPath = state.currentSortOrder.getURLPath(mediaType: state.mediaType)
                 return .run { send in
                     do{
-                        let movies = try await apiClient.fetchMovies(urlPath)
-                        await send(.dataFetched(movies))
+                        let mediaArray = try await apiClient.fetchMediaDetails(urlPath)
+                        await send(.dataFetched(mediaArray))
                     } catch {
                         print(error.localizedDescription)
                     }
                 }
-            case let .dataFetched(movies):
-                state.movies = movies
+            case let .dataFetched(mediaArray):
+                state.mediaArray = mediaArray
                 return .none
             case let .sortOrderChanged(order):
                 guard state.currentSortOrder != order else { return .none }
                 state.currentSortOrder = order
                 return .none
-            case .path(_):
+            case .path:
                 return .none
             }
         }

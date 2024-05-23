@@ -7,29 +7,11 @@
 
 import Foundation
 
-enum NetworkError: Error {
-    case invalidURL
-    case invalidResponse
-    case invalidData
-    case network(Error?)
-}
-
 class NetworkUtility{
-    static let shared = NetworkUtility()
-    private init() { }
-    
-    func request<T: Decodable>(url: URL?) async throws -> T {
-        guard let url else { throw NetworkError.invalidURL }
+    static func request<T: Decodable>(url: URL) async throws -> T {
         let urlRequest = URLRequest(url: url)
-        do {
-            let (data, response) = try await URLSession.shared.data(for: urlRequest)
-            guard let statusCode = (response as? HTTPURLResponse)?.statusCode, (200...299).contains(statusCode) else {
-                throw NetworkError.invalidResponse
-            }
-            guard let response = try? JSONDecoder().decode(T.self, from: data) else { throw NetworkError.invalidData }
-            return response
-        } catch {
-            throw NetworkError.network(error)
-        }
+        let (data, _) = try await URLSession.shared.data(for: urlRequest)
+        let responseData = try JSONDecoder().decode(T.self, from: data)
+        return responseData
     }
 }

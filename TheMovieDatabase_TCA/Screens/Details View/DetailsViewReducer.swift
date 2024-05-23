@@ -13,10 +13,10 @@ struct DetailsViewReducer {
     
     @ObservableState
     struct State: Equatable {
-        let movie: Movie
+        let media: Media
         var cast: [Cast]?
         var reviews: [Review]?
-        @Shared var userFavourites: Favourites
+        @Shared(.userFavourites) var userFavourites: IdentifiedArrayOf<Media> = []
     }
     
     enum Action {
@@ -33,12 +33,12 @@ struct DetailsViewReducer {
             switch action {
             case .fetchCastAndReviewDetails:
                 return .merge(
-                    .run { [movieId = state.movie.id] send in
-                        let castDetails = await apiClient.fetchCastDetails(movieId)
+                    .run { [mediaId = state.media.id] send in
+                        let castDetails = try? await apiClient.fetchCastDetails(mediaId)
                         await send(.castDetailsFetched(castDetails))
                     }
-                    , .run { [movieId = state.movie.id] send in
-                        let reviews = await apiClient.fetchReviews(movieId)
+                    , .run { [mediaId = state.media.id] send in
+                        let reviews = try? await apiClient.fetchReviews(mediaId)
                         await send(.reviewsFetched(reviews))
                     }
                 )
@@ -49,9 +49,12 @@ struct DetailsViewReducer {
                 state.reviews = reviews
                 return .none
             case .favouriteButtonTapped:
-                state.userFavourites.addOrRemoveMovies(state.movie)
+                if !state.userFavourites.insert(state.media, at: 0).inserted {
+                    state.userFavourites.remove(state.media)
+                }
                 return .none
             }
         }
     }
 }
+

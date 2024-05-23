@@ -13,7 +13,7 @@ struct DetailsView: View {
     
     var body: some View {
         ScrollView{
-            DetailsCell(movie: viewStore.movie)
+            DetailsCell(media: viewStore.media)
             if let castDetails = viewStore.cast, !castDetails.isEmpty {
                 CastDetailsView(casts: castDetails)
             }
@@ -29,8 +29,8 @@ struct DetailsView: View {
             Button(action: {
                 viewStore.send(.favouriteButtonTapped)
             }, label: {
-                Image(systemName: viewStore.userFavourites.isFavourite(viewStore.movie) ? "heart.fill": "heart")
-                    .foregroundStyle(viewStore.userFavourites.isFavourite(viewStore.movie) ? .red : .black )
+                Image(systemName: viewStore.userFavourites.contains(viewStore.media) ? "heart.fill": "heart")
+                    .foregroundStyle(viewStore.userFavourites.contains(viewStore.media) ? .red : .black )
             })
         }
         .navigationBarTitleDisplayMode(.inline)
@@ -38,7 +38,7 @@ struct DetailsView: View {
 }
 
 #Preview {
-    DetailsView(viewStore: Store(initialState: DetailsViewReducer.State(movie: Movie.mockData(), userFavourites: Shared(Favourites())), reducer: {
+    DetailsView(viewStore: Store(initialState: DetailsViewReducer.State(media: Media.mockData()), reducer: {
         DetailsViewReducer()
     }))
 }

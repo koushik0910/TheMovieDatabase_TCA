@@ -14,7 +14,7 @@ struct FavouritesViewReducer {
     @ObservableState
     struct State: Equatable {
         var path = StackState<DetailsViewReducer.State>()
-        @Shared var userFavourites : Favourites
+        @SharedReader(.userFavourites) var userFavourites: IdentifiedArrayOf<Media> = []
     }
     
     enum Action {
@@ -31,5 +31,17 @@ struct FavouritesViewReducer {
         .forEach(\.path, action: \.path) {
             DetailsViewReducer()
         }
+    }
+}
+
+
+extension URL {
+    static let userFavourites = Self.documentsDirectory.appending(component: "favourites.json")
+}
+
+// for type safety
+extension PersistenceReaderKey where Self == FileStorageKey<IdentifiedArrayOf<Media>> {
+    static var userFavourites : Self {
+        fileStorage(.userFavourites)
     }
 }

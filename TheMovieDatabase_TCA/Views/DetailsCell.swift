@@ -6,19 +6,22 @@
 //
 
 import SwiftUI
+import NukeUI
 
 struct DetailsCell: View {
-    let movie: Movie
+    let media: Media
     
     var body: some View {
         VStack(spacing: 10){
-            PosterView(backgroundImageURLString: movie.backdropFullPath, posterImageURLString: movie.posterFullPath)
+            PosterView(backgroundImageURL: media.backdropFullPath, posterImageURL: media.posterFullPath)
             
-            TitleAndUserScoreView(title: movie.titleText, voteAverage: movie.voteAverage, votingPercentage: movie.votingPercentage)
+            TitleAndUserScoreView(title: media.titleText, voteAverage: media.voteAverage, votingPercentage: media.votingPercentage)
             
-            ReleaseDateView(releaseDate: movie.dateText)
+            if let releaseDate = media.dateText{
+                ReleaseDateView(releaseDate: releaseDate)
+            }
             
-            TaglineAndOverviewView(tagline: movie.tagline, overview: movie.overview)
+            TaglineAndOverviewView(tagline: media.tagline, overview: media.overview)
         }
         .padding(.bottom)
         .foregroundStyle(.white)
@@ -27,30 +30,34 @@ struct DetailsCell: View {
 }
 
 #Preview {
-    DetailsCell(movie: Movie.mockData())
+    DetailsCell(media: Media.mockData())
 }
 
 struct PosterView: View {
-    let backgroundImageURLString: String
-    let posterImageURLString: String
+    let backgroundImageURL: URL?
+    let posterImageURL: URL?
     
     var body: some View {
         ZStack(alignment: .leading){
-            AsyncImage(url: URL(string: backgroundImageURLString)) { image in
-                image.resizable()
-                    .aspectRatio(contentMode: .fill)
-            } placeholder: {
-                ProgressView()
+            LazyImage(url: backgroundImageURL){ state in
+                if let image = state.image {
+                    image.resizable()
+                        .aspectRatio(contentMode: .fill)
+                } else if state.error != nil {
+                    Image("broken_image")
+                } else {
+                    ProgressView()
+                }
             }
             .frame(height: 220)
             
-            AsyncImage(url: URL(string: posterImageURLString)) { image in
-                image.resizable()
-                    .aspectRatio(contentMode: .fill)
-            } placeholder: {
-                ProgressView()
+            LazyImage(url: posterImageURL){ state in
+                if let image = state.image {
+                    image.resizable()
+                        .aspectRatio(contentMode: .fit)
+                }
             }
-            .frame(width: 120, height: 180)
+            .frame(height: 180)
             .clipShape(RoundedRectangle(cornerRadius: 10))
             .padding(.leading)
         }
@@ -58,15 +65,18 @@ struct PosterView: View {
 }
 
 struct TitleAndUserScoreView: View {
-    let title: String
+    let title: String?
     let voteAverage: Double
     let votingPercentage: String
     var body: some View {
         VStack(spacing: 10){
-            Text(title)
-                .bold()
-                .font(.title2)
-                .foregroundStyle(Color.white)
+            if let title {
+                Text(title)
+                    .bold()
+                    .font(.title2)
+                    .foregroundStyle(Color.white)
+                    .multilineTextAlignment(.center)
+            }
             
             HStack{
                 ZStack{
@@ -117,3 +127,4 @@ struct TaglineAndOverviewView: View {
         .padding(.horizontal)
     }
 }
+

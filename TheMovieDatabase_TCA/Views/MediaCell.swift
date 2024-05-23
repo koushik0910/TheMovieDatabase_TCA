@@ -1,5 +1,5 @@
 //
-//  SearchResultCell.swift
+//  MovieCell.swift
 //  TheMovieDatabase_TCA
 //
 //  Created by Koushik Dutta on 04/04/24.
@@ -8,48 +8,49 @@
 import SwiftUI
 import NukeUI
 
-struct SearchResultCell: View {
+struct MediaCell: View {
     let title: String?
     let imageURL: URL?
-    let overview: String
+    let releaseDate: String?
     
     var body: some View {
-        HStack(spacing: 10){
+        VStack(alignment: .leading) {
             LazyImage(url: imageURL){ state in
                 if let image = state.image {
                     image.resizable()
-                        .aspectRatio(contentMode: .fit)
+                        .aspectRatio(contentMode: .fill)
                 } else if state.error != nil {
                     Image("broken_image")
                 } else {
                     ProgressView()
                 }
             }
-            .frame(height: 160)
-            .clipShape(RoundedRectangle(cornerRadius: 5))
+            .frame(height: 230)
+            .clipShape(RoundedRectangle(cornerRadius: 10))
             
             VStack(alignment: .leading){
                 if let title {
                     Text(title)
-                        .font(.headline)
-                        .lineLimit(3)
+                        .bold()
+                        .lineLimit(2)
                         .multilineTextAlignment(.leading)
-                        .foregroundStyle(.black)
+                        .truncationMode(.middle)
                 }
                 
-                Text(overview)
-                    .font(.caption)
-                    .lineLimit(4)
-                    .multilineTextAlignment(.leading)
-                    .foregroundStyle(.gray)
+                if let releaseDate {
+                    Text(releaseDate)
+                }
             }
+            .font(.callout)
+            .foregroundStyle(.black)
             
             Spacer()
+            
         }
-        .padding(.horizontal)
+        .frame(width: 150)
     }
 }
 
 #Preview {
-    SearchResultCell(title: Media.mockData().titleText, imageURL: Media.mockData().posterFullPath, overview: Media.mockData().overview)
+    MediaCell(title: Media.mockData().title!, imageURL:  Media.mockData().posterFullPath, releaseDate: Media.mockData().dateText)
 }

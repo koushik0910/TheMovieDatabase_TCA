@@ -6,13 +6,14 @@
 //
 
 import SwiftUI
+import NukeUI
 
 struct ReviewView: View {
     let review: Review
     var body: some View {
         VStack(alignment: .leading, spacing: 20){
             
-            AuthorDetailsView(profilePath: review.authorDetails.fullAvatarPath, username: review.authorDetails.username, rating: review.authorDetails.ratingText)
+            AuthorDetailsView(profileImageURL: review.authorDetails.fullAvatarPath, username: review.authorDetails.username, rating: review.authorDetails.ratingText)
             }
         
             Text(review.content)
@@ -24,12 +25,12 @@ struct ReviewView: View {
 }
 
 struct AuthorDetailsView: View {
-    let profilePath : String?
+    let profileImageURL : URL?
     let username: String
     let rating: String
     var body: some View {
         HStack(alignment: .top, spacing: 10){
-            AuthorImageView(profilePath: profilePath)
+            AuthorImageView(profileImageURL: profileImageURL)
             
             VStack(alignment: .leading, spacing: 5){
                 Text("A review by \(username)")
@@ -53,22 +54,20 @@ struct AuthorDetailsView: View {
 }
 
 struct AuthorImageView: View {
-    let profilePath : String?
+    let profileImageURL : URL?
     var body: some View {
         VStack{
-            if let profilePath {
-                AsyncImage(url: URL(string: profilePath)!) { image in
+            LazyImage(url: profileImageURL){ state in
+                if let image = state.image {
                     image.resizable()
                         .aspectRatio(contentMode: .fill)
-                } placeholder: {
-                    ProgressView()
+                } else {
+                    Image(systemName: "person.fill")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(height: 30)
+                        .foregroundStyle(.white)
                 }
-            }else{
-                Image(systemName: "person.fill")
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(width: 30, height: 30)
-                    .foregroundStyle(.white)
             }
         }
         .frame(width: 50, height: 50)

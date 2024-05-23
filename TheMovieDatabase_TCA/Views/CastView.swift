@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import NukeUI
 
 struct CastView: View {
     var cast: Cast
@@ -15,7 +16,7 @@ struct CastView: View {
                 .fill(.white)
             
             VStack(alignment: .leading){
-                CastImageView(profileImagePath: cast.fullProfilePath)
+                CastImageView(profileImageURL: cast.fullProfilePath)
             
                 VStack(alignment: .leading, spacing: 0){
                     Text(cast.name)
@@ -41,20 +42,16 @@ struct CastView: View {
 }
 
 struct CastImageView: View {
-    let profileImagePath: String?
+    let profileImageURL: URL?
     var body: some View {
         VStack(alignment: .leading){
-            if let profileImagePath {
-                AsyncImage(url: URL(string: profileImagePath)!) { image in
+            LazyImage(url: profileImageURL){ state in
+                if let image = state.image {
                     image.resizable()
                         .aspectRatio(contentMode: .fill)
-                } placeholder: {
-                    ProgressView()
+                } else {
+                    Image("person")
                 }
-            }else{
-                Image("person")
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
             }
         }
         .frame(width: 110, height: 130)

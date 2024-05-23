@@ -12,28 +12,23 @@ struct RootView: View {
     @Bindable var viewStore: StoreOf<RootViewReducer>
     
     var body: some View {
-        TabView(selection: $viewStore.currentTab.sending(\.selectTab)){
-            
+        TabView {
             HomeView(viewStore: self.viewStore.scope(state: \.home, action: \.home))
-                .tag(RootViewReducer.Tab.home)
                 .tabItem {
                     Label("Home", systemImage: "house")
             }
             
-            MoviesAndTVShowsView(viewStore: self.viewStore.scope(state: \.movies, action: \.movies))
-                .tag(RootViewReducer.Tab.movies)
+            MediaView(viewStore: self.viewStore.scope(state: \.movies, action: \.movies))
                 .tabItem {
                     Label("Movies", systemImage: "movieclapper")
             }
             
-            MoviesAndTVShowsView(viewStore: self.viewStore.scope(state: \.tvShows, action: \.tvShows))
-                .tag(RootViewReducer.Tab.tvShows)
+            MediaView(viewStore: self.viewStore.scope(state: \.tvShows, action: \.tvShows))
                 .tabItem {
                     Label("TV Shows", systemImage: "play.tv")
             }
             
             FavouritesView(viewStore: self.viewStore.scope(state: \.favourites, action: \.favourites))
-                .tag(RootViewReducer.Tab.favourites)
                 .tabItem {
                     Label("Favourites", systemImage: "heart")
                 } 
