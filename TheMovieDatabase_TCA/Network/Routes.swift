@@ -29,7 +29,7 @@ enum Routes {
             "/3/movie/\(mediaId)/reviews"
             
         case .trending(let mediaType):
-            "/5/trending/\(mediaType.rawValue)/day"
+            "/3/trending/\(mediaType.rawValue)/day"
             
         case .nowPlaying(let mediaType):
             switch mediaType{
