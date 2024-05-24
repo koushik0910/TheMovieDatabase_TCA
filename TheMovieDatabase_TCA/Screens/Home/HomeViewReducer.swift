@@ -21,7 +21,7 @@ struct HomeViewReducer {
     
     enum Action {
         case fetchData
-        case dataFetched((HomeSections, IdentifiedArrayOf<Media>?))
+        case dataFetched([HomeSections: IdentifiedArrayOf<Media>?])
         case searchQueryChanged(String)
         case searchQueryChangeDebounced
         case searchResultFetched(IdentifiedArrayOf<Media>)
@@ -35,26 +35,30 @@ struct HomeViewReducer {
         Reduce { state, action in
             switch action {
             case .fetchData:
-                guard state.sections.count != HomeSections.allCases.count else { return .none }
-                return .merge (
-                    .run { send in
-                        let mediaDetails = try? await apiClient.fetchMediaDetails(HomeSections.trending.path)
-                        await send(.dataFetched((.trending, mediaDetails)))
-                    },
-                    .run { send in
-                        let mediaDetails = try? await apiClient.fetchMediaDetails(HomeSections.popular.path)
-                        await send(.dataFetched((.popular, mediaDetails)))
-                    },
-                    .run { send in
-                        let mediaDetails = try? await apiClient.fetchMediaDetails(HomeSections.tvShows.path)
-                        await send(.dataFetched((.tvShows, mediaDetails)))
+                return .run { send in
+                    let data: [HomeSections : IdentifiedArrayOf<Media>?] =  await withTaskGroup(of: (HomeSections, IdentifiedArrayOf<Media>?).self) { group in
+                        for item in HomeSections.allCases{
+                            group.addTask {
+                                return (item, try? await apiClient.fetchMediaDetails(item.path))
+                            }
+                        }
+                        var result = [HomeSections: IdentifiedArrayOf<Media>?]()
+                        for await item in group {
+                            result[item.0] = item.1
+                        }
+                        return result
                     }
-                )
+                    await send(.dataFetched(data))
+                }
+                
             case let .dataFetched(data):
-                var homeSections = state.sections
-                homeSections.append(HomeSectionData(id: data.0, title: data.0.title, data: data.1))
-                state.sections = IdentifiedArrayOf(uniqueElements: homeSections.sorted { $0.id.rawValue < $1.id.rawValue })
+                var section: IdentifiedArrayOf<HomeSectionData> = []
+                for item in HomeSections.allCases {
+                    section.append(HomeSectionData(id: item, title: item.rawValue, data: data[item] ?? nil ))
+                }
+                state.sections = section
                 return .none
+                
             case let .searchQueryChanged(query):
                 state.searchQuery = query
                 guard !state.searchQuery.isEmpty else {
@@ -62,6 +66,7 @@ struct HomeViewReducer {
                     return .cancel(id: CancelID.search)
                 }
                 return .none
+                
             case .searchQueryChangeDebounced:
                 guard !state.searchQuery.isEmpty else { return .none }
                 return .run { [query = state.searchQuery] send in
@@ -73,9 +78,11 @@ struct HomeViewReducer {
                     }
                 }
                 .cancellable(id: CancelID.search)
+                
             case let .searchResultFetched(movies):
                 state.searchedResults = movies
                 return .none
+                
             case .path(_):
                 return .none
             }

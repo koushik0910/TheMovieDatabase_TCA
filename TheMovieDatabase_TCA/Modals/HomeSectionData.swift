@@ -14,22 +14,11 @@ struct HomeSectionData: Identifiable, Equatable {
     let data: IdentifiedArrayOf<Media>?
 }
 
-enum HomeSections: Int, CaseIterable {
-    case trending = 0
-    case popular
-    case tvShows
-    
-    
-    var title: String {
-        switch self {
-        case .trending:
-            return "Trending"
-        case .popular:
-            return "What's Popular"
-        case .tvShows:
-            return "TV Shows"
-        }
-    }
+enum HomeSections: String, CaseIterable {
+    case trending = "Trending"
+    case popular = "What's Popular"
+    case tvShows = "TV Shows"
+
 
     var path: String {
         switch self {
