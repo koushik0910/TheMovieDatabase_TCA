@@ -51,7 +51,9 @@ struct HomeViewReducer {
                     }
                 )
             case let .dataFetched(data):
-                state.sections.append(HomeSectionData(id: data.0, title: data.0.rawValue, data: data.1))
+                var homeSection = state.sections
+                homeSection.append(HomeSectionData(id: data.0, title: data.0.title, data: data.1))
+                state.sections = IdentifiedArray(uniqueElements: homeSection.sorted { $0.id.rawValue < $1.id.rawValue })
                 return .none
             case let .searchQueryChanged(query):
                 state.searchQuery = query
