@@ -14,15 +14,15 @@ struct DetailsViewReducer {
     @ObservableState
     struct State: Equatable {
         let media: Media
-        var cast: [Cast]?
-        var reviews: [Review]?
+        var cast: IdentifiedArrayOf<Cast>?
+        var reviews: IdentifiedArrayOf<Review>?
         @Shared(.userFavourites) var userFavourites: IdentifiedArrayOf<Media> = []
     }
     
     enum Action {
         case fetchCastAndReviewDetails
-        case castDetailsFetched([Cast]?)
-        case reviewsFetched([Review]?)
+        case castDetailsFetched(IdentifiedArrayOf<Cast>?)
+        case reviewsFetched(IdentifiedArrayOf<Review>?)
         case favouriteButtonTapped
     }
     

@@ -38,7 +38,7 @@ struct CastView: View {
 }
 
 #Preview {
-    CastView(cast: Cast.mockData())
+    CastView(cast: .mock)
 }
 
 struct CastImageView: View {

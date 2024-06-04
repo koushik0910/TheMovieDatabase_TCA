@@ -38,13 +38,13 @@ struct DetailsView: View {
 }
 
 #Preview {
-    DetailsView(viewStore: Store(initialState: DetailsViewReducer.State(media: Media.mockData()), reducer: {
+    DetailsView(viewStore: Store(initialState: DetailsViewReducer.State(media: .mock), reducer: {
         DetailsViewReducer()
     }))
 }
 
 struct CastDetailsView: View {
-    let casts: [Cast]
+    let casts: IdentifiedArrayOf<Cast>
     var body: some View {
         VStack(alignment: .leading, spacing: 0){
             Text("Casts")

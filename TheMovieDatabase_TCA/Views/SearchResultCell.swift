@@ -51,5 +51,5 @@ struct SearchResultCell: View {
 }
 
 #Preview {
-    SearchResultCell(title: Media.mockData().titleText, imageURL: Media.mockData().posterFullPath, overview: Media.mockData().overview)
+    SearchResultCell(title: Media.mock.titleText, imageURL: Media.mock.posterFullPath, overview: Media.mock.overview)
 }

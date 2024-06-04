@@ -6,10 +6,11 @@
 //
 
 import Foundation
+import ComposableArchitecture
 
 // MARK: - CastResponse
 struct CastResponse: Decodable {
-    let cast: [Cast]
+    let cast: IdentifiedArrayOf<Cast>
 }
 
 // MARK: - Cast
@@ -30,9 +31,9 @@ struct Cast: Decodable, Equatable, Identifiable {
         case character
         case profilePath = "profile_path"
     }
-    
-    static func mockData() -> Cast{
-        return Cast( id: 2613589, name: "Sophie McIntosh", character: "Ava", profilePath: "/A1yhe60nSCzLS0wuy7MwgcL4uIl.jpg")
-    }
+}
+
+extension Cast {
+    static let mock = Self(id: 2613589, name: "Sophie McIntosh", character: "Ava", profilePath: "/A1yhe60nSCzLS0wuy7MwgcL4uIl.jpg")
 }
 

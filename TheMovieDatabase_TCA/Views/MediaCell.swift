@@ -52,5 +52,5 @@ struct MediaCell: View {
 }
 
 #Preview {
-    MediaCell(title: Media.mockData().title!, imageURL:  Media.mockData().posterFullPath, releaseDate: Media.mockData().dateText)
+    MediaCell(title: Media.mock.title!, imageURL:  Media.mock.posterFullPath, releaseDate: Media.mock.dateText)
 }

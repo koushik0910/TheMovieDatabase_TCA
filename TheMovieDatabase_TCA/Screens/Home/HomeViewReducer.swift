@@ -24,7 +24,7 @@ struct HomeViewReducer {
         case dataFetched([HomeSections: IdentifiedArrayOf<Media>?])
         case searchQueryChanged(String)
         case searchQueryChangeDebounced
-        case searchResultFetched(IdentifiedArrayOf<Media>)
+        case searchResultFetched(Result<IdentifiedArrayOf<Media>, Error>)
         case path(StackAction<DetailsViewReducer.State, DetailsViewReducer.Action>)
     }
     
@@ -54,7 +54,7 @@ struct HomeViewReducer {
             case let .dataFetched(data):
                 var section: IdentifiedArrayOf<HomeSectionData> = []
                 for item in HomeSections.allCases {
-                    section.append(HomeSectionData(id: item, title: item.rawValue, data: data[item] ?? nil ))
+                    section.append(HomeSectionData(id: item, title: item.rawValue, data: data[item] as? IdentifiedArrayOf<Media>))
                 }
                 state.sections = section
                 return .none
@@ -70,17 +70,17 @@ struct HomeViewReducer {
             case .searchQueryChangeDebounced:
                 guard !state.searchQuery.isEmpty else { return .none }
                 return .run { [query = state.searchQuery] send in
-                    do{
-                        let result = try await apiClient.searchMovies(query)
-                        await send(.searchResultFetched(result))
-                    }catch{
-                        print(error.localizedDescription)
-                    }
+                    await send(.searchResultFetched(Result { try await apiClient.searchMovies(query) }))
                 }
                 .cancellable(id: CancelID.search)
                 
-            case let .searchResultFetched(movies):
+            case let .searchResultFetched(.success(movies)):
                 state.searchedResults = movies
+                return .none
+                
+            case .searchResultFetched(.failure):
+                state.searchQuery = ""
+                state.searchedResults = []
                 return .none
                 
             case .path(_):

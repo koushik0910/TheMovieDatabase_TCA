@@ -30,7 +30,7 @@ struct DetailsCell: View {
 }
 
 #Preview {
-    DetailsCell(media: Media.mockData())
+    DetailsCell(media: .mock)
 }
 
 struct PosterView: View {

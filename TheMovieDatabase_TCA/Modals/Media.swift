@@ -65,16 +65,8 @@ struct Media: Codable, Hashable, Identifiable {
         case voteCount = "vote_count"
         case tagline
     }
-    
-//    func hash(into hasher: inout Hasher) {
-//        hasher.combine(id)
-//    }
-//    
-//    static func ==(lhs: Media, rhs: Media) -> Bool {
-//        return lhs.id == rhs.id
-//    }
-    
-    static func mockData() -> Media {
-        return Media(adult: true, backdropPath: "/kXfqcdQKsToO0OUXHcrrNCHDBzO.jpg", id: 278, overview: "Framed in the 1940s for the double murder of his wife and her lover, upstanding banker Andy Dufresne begins a new life at the Shawshank prison, where he puts his accounting skills to work for an amoral warden. During his long stretch in prison, Dufresne comes to be admired by the other inmates -- including an older prisoner named Red -- for his integrity and unquenchable sense of hope.", popularity: 155.042, posterPath: "/q6y0Go1tsGEsmtFryDOJo3dEmqu.jpg", releaseDate: "1994-09-23", firstAirDate: nil, title: "The Shawshank Redemption", name: nil, voteAverage: 8.704, voteCount: 25610, tagline: "The Shawshank Redemption")
-    }
+}
+
+extension Media {
+    static let mock = Self(adult: true, backdropPath: "/kXfqcdQKsToO0OUXHcrrNCHDBzO.jpg", id: 278, overview: "Framed in the 1940s for the double murder of his wife and her lover, upstanding banker Andy Dufresne begins a new life at the Shawshank prison, where he puts his accounting skills to work for an amoral warden. During his long stretch in prison, Dufresne comes to be admired by the other inmates -- including an older prisoner named Red -- for his integrity and unquenchable sense of hope.", popularity: 155.042, posterPath: "/q6y0Go1tsGEsmtFryDOJo3dEmqu.jpg", releaseDate: "1994-09-23", firstAirDate: nil, title: "The Shawshank Redemption", name: nil, voteAverage: 8.704, voteCount: 25610, tagline: "The Shawshank Redemption")
 }

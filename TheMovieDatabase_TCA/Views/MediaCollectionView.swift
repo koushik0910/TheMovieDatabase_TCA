@@ -27,5 +27,5 @@ struct MediaCollectionView: View {
 }
 
 #Preview {
-    MediaCollectionView(mediaArray: [Media.mockData()])
+    MediaCollectionView(mediaArray: [.mock])
 }

@@ -11,8 +11,18 @@ import ComposableArchitecture
 struct APIClient {
     var fetchMediaDetails: (String) async throws -> IdentifiedArrayOf<Media>
     var searchMovies: (String) async throws -> IdentifiedArrayOf<Media>
-    var fetchCastDetails: (Int) async throws -> [Cast]?
-    var fetchReviews: (Int) async throws -> [Review]?
+    var fetchCastDetails: (Int) async throws -> IdentifiedArrayOf<Cast>?
+    var fetchReviews: (Int) async throws -> IdentifiedArrayOf<Review>?
+}
+
+extension APIClient: TestDependencyKey {
+    static let testValue: APIClient = .previewValue
+    static let previewValue = Self(
+        fetchMediaDetails: {_ in IdentifiedArray(arrayLiteral: .mock)},
+        searchMovies: { _ in IdentifiedArray(arrayLiteral: .mock)},
+        fetchCastDetails: { _ in [.mock]},
+        fetchReviews: {_ in [.mock]}
+   )
 }
 
 extension APIClient: DependencyKey {

@@ -21,7 +21,7 @@ struct ReviewView: View {
 }
 
 #Preview {
-    ReviewView(review: Review.mockData())
+    ReviewView(review: .mock)
 }
 
 struct AuthorDetailsView: View {
