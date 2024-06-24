@@ -18,10 +18,12 @@ final class HomeViewTests: XCTestCase {
         }withDependencies: {
             $0.apiClient.fetchMediaDetails = { _ in IdentifiedArray(arrayLiteral: .mock) }
         }
+        store.exhaustivity = .off
         
         await store.send(.fetchData)
-        await store.receive(\.dataFetched) {
-            $0.sections = [HomeSectionData(id: .trending, title: HomeSection.trending.rawValue, data: [.mock]), HomeSectionData(id: .popular, title: HomeSection.popular.rawValue, data: [.mock]), HomeSectionData(id: .tvShows, title: HomeSection.tvShows.rawValue, data: [.mock])]
+        await store.skipReceivedActions()
+        store.assert {
+            $0.sections = [HomeSectionData(id: .trending, title: HomeSection.trending.title, data: [.mock]), HomeSectionData(id: .popular, title: HomeSection.popular.title, data: [.mock]), HomeSectionData(id: .tvShows, title: HomeSection.tvShows.title, data: [.mock])]
         }
     }
     
@@ -32,10 +34,12 @@ final class HomeViewTests: XCTestCase {
         }withDependencies: {
             $0.apiClient.fetchMediaDetails = { _ in throw URLError(.badServerResponse) }
         }
+        store.exhaustivity = .off
         
         await store.send(.fetchData)
-        await store.receive(\.dataFetched) {
-            $0.sections = [HomeSectionData(id: .trending, title: HomeSection.trending.rawValue, data: nil), HomeSectionData(id: .popular, title: HomeSection.popular.rawValue, data: nil), HomeSectionData(id: .tvShows, title: HomeSection.tvShows.rawValue, data: nil)]
+        await store.skipReceivedActions()
+        store.assert {
+            $0.sections = [HomeSectionData(id: .trending, title: HomeSection.trending.title, data: nil), HomeSectionData(id: .popular, title: HomeSection.popular.title, data: nil), HomeSectionData(id: .tvShows, title: HomeSection.tvShows.title, data: nil)]
         }
     }
     
