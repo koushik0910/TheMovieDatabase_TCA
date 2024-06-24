@@ -34,11 +34,6 @@ struct FavouritesViewReducer {
     }
 }
 
-
-extension URL {
-    static let userFavourites = Self.documentsDirectory.appending(component: "favourites.json")
-}
-
 // for type safety
 extension PersistenceReaderKey where Self == FileStorageKey<IdentifiedArrayOf<Media>> {
     static var userFavourites : Self {

@@ -13,7 +13,10 @@ struct HomeViewReducer {
 
     @ObservableState
     struct State: Equatable {
-        var sections : IdentifiedArrayOf<HomeSectionData> = []
+        var sections : IdentifiedArrayOf<HomeSectionData> = IdentifiedArrayOf(
+            uniqueElements: HomeSection.allCases.map {
+                HomeSectionData(id: $0, title: $0.title, data: [])
+            })
         var searchQuery = ""
         var searchedResults: IdentifiedArrayOf<Media> = []
         var path = StackState<DetailsViewReducer.State>()
@@ -21,7 +24,7 @@ struct HomeViewReducer {
     
     enum Action {
         case fetchData
-        case dataFetched([HomeSections: IdentifiedArrayOf<Media>?])
+        case dataFetched(HomeSection, IdentifiedArrayOf<Media>?)
         case searchQueryChanged(String)
         case searchQueryChangeDebounced
         case searchResultFetched(Result<IdentifiedArrayOf<Media>, Error>)
@@ -35,28 +38,23 @@ struct HomeViewReducer {
         Reduce { state, action in
             switch action {
             case .fetchData:
-                return .run { send in
-                    let data: [HomeSections : IdentifiedArrayOf<Media>?] =  await withTaskGroup(of: (HomeSections, IdentifiedArrayOf<Media>?).self) { group in
-                        for item in HomeSections.allCases{
-                            group.addTask {
-                                return (item, try? await apiClient.fetchMediaDetails(item.path))
-                            }
-                        }
-                        var result = [HomeSections: IdentifiedArrayOf<Media>?]()
-                        for await item in group {
-                            result[item.0] = item.1
-                        }
-                        return result
+                return .merge (
+                    .run { send in
+                        let mediaDetails = try? await apiClient.fetchMediaDetails(Routes.getURLPath(forSection: .trending))
+                        await send(.dataFetched(.trending, mediaDetails))
+                    },
+                    .run { send in
+                        let mediaDetails = try? await apiClient.fetchMediaDetails(Routes.getURLPath(forSection: .popular))
+                        await send(.dataFetched(.popular, mediaDetails))
+                    },
+                    .run { send in
+                        let mediaDetails = try? await apiClient.fetchMediaDetails(Routes.getURLPath(forSection: .tvShows))
+                        await send(.dataFetched(.tvShows, mediaDetails))
                     }
-                    await send(.dataFetched(data))
-                }
+                )
                 
-            case let .dataFetched(data):
-                var section: IdentifiedArrayOf<HomeSectionData> = []
-                for item in HomeSections.allCases {
-                    section.append(HomeSectionData(id: item, title: item.rawValue, data: data[item] as? IdentifiedArrayOf<Media>))
-                }
-                state.sections = section
+            case let .dataFetched(section, mediaDetails):
+                state.sections[section.rawValue].data = mediaDetails
                 return .none
                 
             case let .searchQueryChanged(query):

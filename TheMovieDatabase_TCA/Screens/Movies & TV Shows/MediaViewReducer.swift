@@ -17,6 +17,7 @@ struct MediaViewReducer {
         var mediaArray: IdentifiedArrayOf<Media> = []
         let mediaType: MediaType
         var path = StackState<DetailsViewReducer.State>()
+        @Presents var alert: AlertState<Action.Alert>?
     }
     
     enum Action {
@@ -24,21 +25,26 @@ struct MediaViewReducer {
         case dataFetched(IdentifiedArrayOf<Media>)
         case sortOrderChanged(MediaSortOrder)
         case path(StackAction<DetailsViewReducer.State, DetailsViewReducer.Action>)
+        case alert(PresentationAction<Alert>)
+        case showAPIErrorAlert(Error)
+        enum Alert: Equatable {
+        }
     }
     
     @Dependency(\.apiClient) var apiClient
+    @Dependency(\.dismiss) var dismiss
     
     var body: some ReducerOf<Self> {
         Reduce { state, action in
             switch action {
             case .fetchData:
-                let urlPath = state.currentSortOrder.getURLPath(mediaType: state.mediaType)
+                let urlPath = Routes.getURLPath(forOrder: state.currentSortOrder, mediaType: state.mediaType)
                 return .run { send in
                     do{
-                        let mediaArray = try await apiClient.fetchMediaDetails(urlPath)
+                        let mediaArray = try await apiClient.fetchMediaDetails(urlPath + "vbfwhj348257")
                         await send(.dataFetched(mediaArray))
                     } catch {
-                        print(error.localizedDescription)
+                        await send(.showAPIErrorAlert(error))
                     }
                 }
             case let .dataFetched(mediaArray):
@@ -50,10 +56,30 @@ struct MediaViewReducer {
                 return .none
             case .path:
                 return .none
+            case .alert:
+                return .none
+            case let .showAPIErrorAlert(error):
+                state.alert = .showAPIError(error: error)
+                return .none
             }
         }
         .forEach(\.path, action: \.path) {
             DetailsViewReducer()
+        }
+        .ifLet(\.alert, action: \.alert)
+    }
+}
+
+extension AlertState where Action == MediaViewReducer.Action.Alert {
+    static func showAPIError(error: Error) -> Self {
+        Self {
+            TextState("Error")
+        } actions: {
+            ButtonState(role: .cancel) {
+                TextState("Ok")
+            }
+        } message: {
+            TextState(error.localizedDescription)
         }
     }
 }

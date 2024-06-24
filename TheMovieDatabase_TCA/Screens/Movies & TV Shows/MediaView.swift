@@ -25,6 +25,7 @@ struct MediaView: View {
         }destination: { store in
             DetailsView(viewStore: store)
         }
+        .alert($viewStore.scope(state: \.alert, action: \.alert))
     }
 }
 

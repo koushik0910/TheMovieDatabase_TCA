@@ -55,6 +55,10 @@ struct PosterView: View {
                 if let image = state.image {
                     image.resizable()
                         .aspectRatio(contentMode: .fit)
+                } else if state.error != nil {
+                    Image("broken_image")
+                } else {
+                    ProgressView()
                 }
             }
             .frame(height: 180)

@@ -21,7 +21,7 @@ final class HomeViewTests: XCTestCase {
         
         await store.send(.fetchData)
         await store.receive(\.dataFetched) {
-            $0.sections = [HomeSectionData(id: .trending, title: HomeSections.trending.rawValue, data: [.mock]), HomeSectionData(id: .popular, title: HomeSections.popular.rawValue, data: [.mock]), HomeSectionData(id: .tvShows, title: HomeSections.tvShows.rawValue, data: [.mock])]
+            $0.sections = [HomeSectionData(id: .trending, title: HomeSection.trending.rawValue, data: [.mock]), HomeSectionData(id: .popular, title: HomeSection.popular.rawValue, data: [.mock]), HomeSectionData(id: .tvShows, title: HomeSection.tvShows.rawValue, data: [.mock])]
         }
     }
     
@@ -35,7 +35,7 @@ final class HomeViewTests: XCTestCase {
         
         await store.send(.fetchData)
         await store.receive(\.dataFetched) {
-            $0.sections = [HomeSectionData(id: .trending, title: HomeSections.trending.rawValue, data: nil), HomeSectionData(id: .popular, title: HomeSections.popular.rawValue, data: nil), HomeSectionData(id: .tvShows, title: HomeSections.tvShows.rawValue, data: nil)]
+            $0.sections = [HomeSectionData(id: .trending, title: HomeSection.trending.rawValue, data: nil), HomeSectionData(id: .popular, title: HomeSection.popular.rawValue, data: nil), HomeSectionData(id: .tvShows, title: HomeSection.tvShows.rawValue, data: nil)]
         }
     }
     

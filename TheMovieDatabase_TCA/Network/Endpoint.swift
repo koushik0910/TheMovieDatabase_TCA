@@ -37,3 +37,7 @@ extension EndPoint {
         }
     }
 }
+
+extension URL {
+    static let userFavourites = Self.documentsDirectory.appending(component: "favourites.json")
+}

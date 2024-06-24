@@ -9,25 +9,24 @@ import Foundation
 import ComposableArchitecture
 
 struct HomeSectionData: Identifiable, Equatable {
-    let id: HomeSections
+    let id: HomeSection
     let title: String
-    let data: IdentifiedArrayOf<Media>?
+    var data: IdentifiedArrayOf<Media>?
 }
 
-enum HomeSections: String, CaseIterable {
-    case trending = "Trending"
-    case popular = "What's Popular"
-    case tvShows = "TV Shows"
+enum HomeSection: Int, CaseIterable {
+    case trending = 0
+    case popular
+    case tvShows
 
-
-    var path: String {
+    var title: String {
         switch self {
         case .trending:
-            return Routes.trending(.movie).path
+            return "Trending"
         case .popular:
-            return Routes.popular(.movie).path
+            return "What's Popular"
         case .tvShows:
-            return Routes.nowPlaying(.tv).path
+            return "TV Shows"
         }
     }
 }

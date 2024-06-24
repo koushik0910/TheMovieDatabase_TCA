@@ -49,4 +49,26 @@ enum Routes {
             "https://image.tmdb.org/t/p/w500\(path)"
         }
     }
+    
+    static func getURLPath(forSection section: HomeSection) -> String {
+        switch section {
+        case .trending:
+            return Routes.trending(.movie).path
+        case .popular:
+            return Routes.popular(.movie).path
+        case .tvShows:
+            return Routes.nowPlaying(.tv).path
+        }
+    }
+    
+    static func getURLPath(forOrder order: MediaSortOrder, mediaType: MediaType) -> String {
+        switch order {
+        case .nowPlaying:
+            Routes.nowPlaying(mediaType).path
+        case .popular:
+            Routes.popular(mediaType).path
+        case .topRated:
+            Routes.topRated(mediaType).path
+        }
+    }
 }
